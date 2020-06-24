@@ -1,0 +1,30 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: chihweidavidliu/satoshi-auth
+      context: server
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: chihweidavidliu/satoshi-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.ts"
+            dest: .
+          - src: "**/*.tsx"
+            dest: .
+          - src: "**/*.js"
+            dest: .

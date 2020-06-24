@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satoshi-client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satoshi-client
+  template:
+    metadata:
+      labels:
+        app: satoshi-client
+    spec:
+      containers:
+        - name: satoshi-client
+          image: chihweidavidliu/satoshi-client
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satoshi-client-srv
+spec:
+  selector:
+    app: satoshi-client
+  type: ClusterIP
+  ports:
+    - name: satoshi-client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
