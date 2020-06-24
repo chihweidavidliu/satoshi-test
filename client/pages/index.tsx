@@ -35,7 +35,7 @@ interface IIndexPageProps {
   currentUser: { id: string; email: string } | null;
 }
 
-const IndexPage: NextPage<IIndexPageProps> = ({ currentUser }) => {
+const IndexPage: NextPage<IIndexPageProps> = () => {
   return (
     <PageWrapper>
       <FadeIn>

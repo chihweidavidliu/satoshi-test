@@ -54,7 +54,7 @@ const CustomNav = () => {
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
       <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
         {currentUser && (
-          <Nav.Item className="text-dark">{currentUser.email}</Nav.Item>
+          <Nav.Item className="text-dark">{currentUser.name}</Nav.Item>
         )}
         {renderLinks()}
       </Navbar.Collapse>

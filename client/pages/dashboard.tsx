@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { NextPage, NextPageContext } from "next";
 import { PageWrapper } from "../components/PageWrapper";
 import buildClient from "../api/buildClient";
