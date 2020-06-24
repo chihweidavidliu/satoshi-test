@@ -33,7 +33,7 @@ signupRouter.post(
     const user = User.build({ name, password, score, age });
     await user.save();
 
-    const userJwt = createToken(user.id, user.name);
+    const userJwt = createToken(user.id, user.name, user.score, user.age);
     // store jwt in session object
     // @ts-ignore
     req.session = {

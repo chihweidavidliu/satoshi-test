@@ -7,7 +7,7 @@ export const PageWrapper = styled.div`
   width: 100vw;
   justify-content: center;
   align-items: center;
-  background-image: url("https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1934&q=80");
+  background-image: url("https://images.unsplash.com/photo-1465850238811-80ce79442c7a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1489&q=80");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

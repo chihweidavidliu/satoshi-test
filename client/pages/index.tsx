@@ -42,7 +42,6 @@ const IndexPage: NextPage<IIndexPageProps> = ({ currentUser }) => {
         <ContentGrid>
           <TitleWrapper>
             <H1>Welcome</H1>
-            <p>{currentUser ? "You are signed in" : "You are not signed in"}</p>
           </TitleWrapper>
         </ContentGrid>
       </FadeIn>

@@ -31,7 +31,7 @@ signinRouter.post(
       throw new BadRequestError("Invalid Credentials");
     }
 
-    const userJwt = createToken(user.id, user.name);
+    const userJwt = createToken(user.id, user.name, user.score, user.age);
 
     // @ts-ignore
     req.session = {

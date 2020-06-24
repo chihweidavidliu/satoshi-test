@@ -5,36 +5,11 @@ import buildClient from "../api/buildClient";
 import { FadeIn } from "../components/FadeIn";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-
-const ContentGrid = styled.div`
-  width: 90%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr;
-  grid-gap: 20px;
-
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    width: 400px;
-  }
-`;
-
-const TitleWrapper = styled.div`
-  text-align: center;
-  padding: 30px;
-  color: white;
-`;
-
-const H1 = styled.h1`
-  margin: 0;
-  color: white;
-  font-size: 48px;
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    font-size: 64px;
-  }
-`;
+import Dashboard from "../components/Dashboard";
+import { IUser } from "../types/IUser";
 
 interface IDashboardPageProps {
-  currentUser: { id: string; email: string } | null;
+  currentUser: IUser | null;
 }
 
 const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
@@ -48,14 +23,7 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
 
   return (
     <PageWrapper>
-      <FadeIn>
-        <ContentGrid>
-          <TitleWrapper>
-            <H1>Dashboard</H1>
-            <p>{currentUser ? "You are signed in" : "You are not signed in"}</p>
-          </TitleWrapper>
-        </ContentGrid>
-      </FadeIn>
+      <FadeIn>{currentUser && <Dashboard currentUser={currentUser} />}</FadeIn>
     </PageWrapper>
   );
 };
