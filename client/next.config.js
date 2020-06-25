@@ -7,7 +7,5 @@ module.exports = withPWA({
     config.watchOptions.poll = 300;
     return config;
   },
-  pwa: {
-    dest: 'public'
-  }
+  pwa: { dest: 'public'}
 });
