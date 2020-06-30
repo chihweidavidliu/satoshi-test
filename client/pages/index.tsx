@@ -3,6 +3,8 @@ import { NextPage, NextPageContext } from "next";
 import { PageWrapper } from "../components/PageWrapper";
 import buildClient from "../api/buildClient";
 import { FadeIn } from "../components/FadeIn";
+import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const ContentGrid = styled.div`
   width: 90%;
@@ -35,7 +37,15 @@ interface IIndexPageProps {
   currentUser: { id: string; email: string } | null;
 }
 
-const IndexPage: NextPage<IIndexPageProps> = () => {
+const IndexPage: NextPage<IIndexPageProps> = ({ currentUser }) => {
+  const router = useRouter();
+
+  useEffect(() => {
+    if (currentUser) {
+      router.push("/dashboard");
+    }
+  }, []);
+
   return (
     <PageWrapper>
       <FadeIn>
