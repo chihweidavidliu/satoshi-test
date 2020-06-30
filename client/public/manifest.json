@@ -1,10 +1,10 @@
 {
   "name": "Satoshi Test",
-  "short_name": "Satoshi Test",
+  "short_name": "Satoshi",
   "theme_color": "#2196f3",
   "background_color": "#23567e",
-  "display": "browser",
-  "Scope": "/",
+  "display": "standalone",
+  "scope": "/",
   "start_url": "/",
   "icons": [
     {

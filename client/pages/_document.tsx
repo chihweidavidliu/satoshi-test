@@ -66,7 +66,8 @@ export default class MyDocument extends Document<any> {
             type="image/png"
             sizes="32x32"
           />
-          <link rel="apple-touch-icon" href="/apple-icon.png"></link>
+          <link rel="apple-touch-icon" href="/icons/icon-96x96.png"></link>
+          <meta name="apple-mobile-web-app-status-bar" content="#23567e"></meta>
           <meta name="theme-color" content="#317EFB" />
         </Head>
         <body>
