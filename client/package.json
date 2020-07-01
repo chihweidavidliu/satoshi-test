@@ -5,7 +5,9 @@
     "dev": "next",
     "build": "next build",
     "start": "next start",
-    "check-types": "tsc -p tsconfig.json --noEmit"
+    "check-types": "tsc -p tsconfig.json --noEmit",
+    "docker-dev": "docker build -t chihweidavidliu/satoshi-client-dev -f Dockerfile . && docker push chihweidavidliu/satoshi-client-dev",
+    "docker-prod": "docker build -t chihweidavidliu/satoshi-client -f Dockerfile.prod . && docker push chihweidavidliu/satoshi-client"
   },
   "dependencies": {
     "@types/axios": "^0.14.0",
