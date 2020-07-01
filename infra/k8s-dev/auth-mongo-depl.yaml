@@ -1,3 +1,4 @@
+# Not using persistent volumes in dev mode
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -15,6 +16,7 @@ spec:
       containers:
         - name: satoshi-auth-mongo
           image: mongo
+
 ---
 apiVersion: v1
 kind: Service

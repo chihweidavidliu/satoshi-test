@@ -1,0 +1,47 @@
+kind: StatefulSet
+apiVersion: apps/v1
+metadata:
+  name: satoshi-auth-mongo
+spec:
+  serviceName: satoshi-auth-mongo
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satoshi-auth-mongo
+  template:
+    metadata:
+      labels:
+        app: satoshi-auth-mongo
+    spec:
+      containers:
+        - name: satoshi-auth-mongo-pod
+          image: mongo:3.4-jessie
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-vol
+              mountPath: /data/db
+  volumeClaimTemplates:
+    - metadata:
+        name: mongo-vol
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        storageClassName: default
+        resources:
+          requests:
+            storage: 500M
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satoshi-auth-mongo-srv
+spec:
+  selector:
+    app: satoshi-auth-mongo
+  type: ClusterIP
+  ports:
+    - name: auth-db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
