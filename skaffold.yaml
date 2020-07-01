@@ -17,7 +17,7 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
-    - image: chihweidavidliu/satoshi-client
+    - image: chihweidavidliu/satoshi-client-dev
       context: client
       docker:
         dockerfile: Dockerfile
