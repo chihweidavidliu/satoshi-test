@@ -1,12 +1,14 @@
 import mongoose, { Schema, Model, Document } from "mongoose";
 import { PasswordManager } from "../services/password-manager";
+import { UserType } from "../types/UserType";
 
 // describes the attributes needed to construct a user
 interface UserAttributes {
+  email: string;
   name: string;
-  age: number;
-  score: number;
+  type: UserType;
   password: string;
+  originatorId?: string;
 }
 
 // describes the properties that a user document has
@@ -19,14 +21,13 @@ interface UserModel extends Model<UserDocument> {
 
 const UserSchema: Schema = new Schema(
   {
-    name: { type: String, required: true, unique: true },
+    email: { type: String, required: true, unique: true },
+    name: { type: String, required: true },
     password: { type: String, required: true },
-    age: { type: Number, required: true },
-    score: { type: Number, required: true },
+    type: { type: String, required: true },
+    originatorId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {
-    // define a toJSON function that will be called whenever the document is stringified (e.g. when we call res.send(user))
-    // ret is the original attempt at stringifying the object
     toJSON: {
       transform(doc, ret) {
         ret.id = ret._id;

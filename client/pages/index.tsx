@@ -1,35 +1,38 @@
 import styled from "styled-components";
 import { NextPage, NextPageContext } from "next";
-import { PageWrapper } from "../components/PageWrapper";
 import buildClient from "../api/buildClient";
-import { FadeIn } from "../components/FadeIn";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
 
-const ContentGrid = styled.div`
-  width: 90%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr;
-  grid-gap: 20px;
-
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    width: 400px;
-  }
+export const SplashScreen = styled.div`
+  position: relative;
+  height: calc(100vh - 55px);
+  display: flex;
+  width: 100vw;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  background-color: #101a3f;
+  padding: 0;
 `;
 
-const TitleWrapper = styled.div`
-  text-align: center;
-  padding: 30px;
-  color: white;
+const Logo = styled.img`
+  width: 90%;
+
+  @media (min-width: ${(props) => props.theme.largeMobileBreakpoint}) {
+    width: 376px;
+  }
 `;
 
 const H1 = styled.h1`
   margin: 0;
+  margin-top: 20px;
   color: white;
   font-size: 48px;
+  font-family: "Montserrat", sans-serif;
   @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    font-size: 64px;
+    font-size: 48px;
   }
 `;
 
@@ -43,19 +46,21 @@ const IndexPage: NextPage<IIndexPageProps> = ({ currentUser }) => {
   useEffect(() => {
     if (currentUser) {
       router.push("/dashboard");
+    } else {
+      setTimeout(() => {
+        router.push("/signin");
+      }, 1000);
     }
   }, []);
 
   return (
-    <PageWrapper>
-      <FadeIn>
-        <ContentGrid>
-          <TitleWrapper>
-            <H1>Welcome</H1>
-          </TitleWrapper>
-        </ContentGrid>
-      </FadeIn>
-    </PageWrapper>
+    <SplashScreen>
+      <Logo src="/LoadLogo.png" />
+
+      <div>
+        <H1>Modern Marketing</H1>
+      </div>
+    </SplashScreen>
   );
 };
 

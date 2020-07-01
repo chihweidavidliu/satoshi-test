@@ -33,6 +33,7 @@ export const theme: ITheme = {
   largeMobileBreakpoint: "376px",
   tabletBreakpoint: "767px",
   smallDesktopBreakpoint: "1024px",
+  fontFamily: "Roboto",
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`

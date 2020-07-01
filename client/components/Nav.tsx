@@ -3,6 +3,11 @@ import Navbar from "react-bootstrap/Navbar";
 import Nav from "react-bootstrap/Nav";
 import { useRouter } from "next/dist/client/router";
 import { useAuthContext } from "../context/AuthContext";
+import styled from "styled-components";
+
+const StyledNavbar = styled(Navbar)`
+  background-color: #78acc6;
+`;
 
 const CustomNav = () => {
   const router = useRouter();
@@ -43,12 +48,12 @@ const CustomNav = () => {
   };
 
   return (
-    <Navbar bg="light" expand="lg">
+    <StyledNavbar expand="lg">
       <Navbar.Brand
         onClick={() => router.push("/")}
         style={{ cursor: "pointer" }}
       >
-        Satoshi Test
+        <img src="logo.png" />
       </Navbar.Brand>
 
       <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -58,7 +63,7 @@ const CustomNav = () => {
         )}
         {renderLinks()}
       </Navbar.Collapse>
-    </Navbar>
+    </StyledNavbar>
   );
 };
 

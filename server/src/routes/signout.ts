@@ -1,5 +1,6 @@
 import { Router } from "express";
-import { requireAuth, currentUser } from "@dlticketbuddy/common";
+import { currentUser } from "../middlewares/current-user";
+import { requireAuth } from "../middlewares/require-auth";
 
 const signoutRouter = Router();
 

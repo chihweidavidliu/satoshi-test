@@ -11,32 +11,6 @@ import { HTTP_METHOD } from "../types/httpMethod";
 import { useRouter } from "next/router";
 import { FadeIn } from "./FadeIn";
 
-const ContentGrid = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr;
-  grid-gap: 20px;
-
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    width: 400px;
-  }
-`;
-
-const TitleWrapper = styled.div`
-  text-align: center;
-  padding: 30px;
-`;
-
-const H1 = styled.h1`
-  margin: 0;
-  color: white;
-  font-size: 24px;
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    font-size: 48px;
-  }
-`;
-
 const H2 = styled.h2`
   margin-bottom: 20px;
   text-align: center;
@@ -100,67 +74,60 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
 
   return (
     <FadeIn>
-      <ContentGrid>
-        <TitleWrapper>
-          <H1>Welcome Back</H1>
-        </TitleWrapper>
-        <Card>
-          <H2>Sign In</H2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                placeholder="Enter name"
-                name="username"
-                value={values.username}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Group>
-            {touched.username && errors.username && (
-              <Alert variant="danger">{errors.username}</Alert>
-            )}
+      <Card>
+        <H2>Log In</H2>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control
+              placeholder="Name"
+              name="username"
+              value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Form.Group>
+          {touched.username && errors.username && (
+            <Alert variant="danger">{errors.username}</Alert>
+          )}
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Group>
-            {touched.password && errors.password && (
-              <Alert variant="danger">{errors.password}</Alert>
-            )}
-            <div className="text-center">
-              <Button
-                variant="primary"
-                type="submit"
-                style={{ marginBottom: "10px" }}
-              >
-                Submit
-              </Button>
-            </div>
-            {apiErrors}
-            <P>
-              {isSignupForm ? "Already" : "Don't"} have an account? Click{" "}
-              <A
-                className="text-primary"
-                onClick={() => {
-                  const endpoint = isSignupForm ? "/signin" : "/signup";
-                  router.push(endpoint);
-                }}
-              >
-                here
-              </A>{" "}
-              to sign {isSignupForm ? "in" : "up"}
-            </P>
-          </Form>
-        </Card>
-      </ContentGrid>
+          <Form.Group controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Form.Group>
+          {touched.password && errors.password && (
+            <Alert variant="danger">{errors.password}</Alert>
+          )}
+          <div className="text-center">
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ marginBottom: "10px" }}
+            >
+              Submit
+            </Button>
+          </div>
+          {apiErrors}
+          <P>
+            {isSignupForm ? "Already" : "Don't"} have an account? Click{" "}
+            <A
+              className="text-primary"
+              onClick={() => {
+                const endpoint = isSignupForm ? "/signin" : "/signup";
+                router.push(endpoint);
+              }}
+            >
+              here
+            </A>{" "}
+            to sign {isSignupForm ? "in" : "up"}
+          </P>
+        </Form>
+      </Card>
     </FadeIn>
   );
 };

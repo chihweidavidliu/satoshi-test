@@ -1,11 +1,17 @@
 import request from "supertest";
 import { app } from "../../app";
+import { UserType } from "../../types/UserType";
 
 it("returns 200 on valid signin", async () => {
   // signup
   await request(app)
     .post("/api/users/signup")
-    .send({ email: "david@defty.com", password: "password" })
+    .send({
+      email: "david@defty.com",
+      name: "david",
+      password: "password",
+      type: UserType.ORIGINATOR,
+    })
     .expect(201);
 
   await request(app)
@@ -18,7 +24,12 @@ it("returns 400 on invalid signin", async () => {
   // signup
   await request(app)
     .post("/api/users/signup")
-    .send({ email: "david@defty.com", password: "password" })
+    .send({
+      email: "david@defty.com",
+      name: "david",
+      password: "password",
+      type: UserType.ORIGINATOR,
+    })
     .expect(201);
 
   await request(app)
@@ -31,7 +42,12 @@ it("sets a cookie after successful signin", async () => {
   // signup
   await request(app)
     .post("/api/users/signup")
-    .send({ email: "david@defty.com", password: "password" })
+    .send({
+      email: "david@defty.com",
+      name: "david",
+      password: "password",
+      type: UserType.ORIGINATOR,
+    })
     .expect(201);
 
   const response = await request(app)

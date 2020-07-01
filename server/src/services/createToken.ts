@@ -1,11 +1,12 @@
 import jwt from "jsonwebtoken";
+import { UserType } from "../types/UserType";
 
 export const createToken = (
   id: string,
+  email: string,
   name: string,
-  score: number,
-  age: number
+  type: UserType
 ) => {
-  const userJwt = jwt.sign({ id, name, score, age }, process.env.JWT_KEY!);
+  const userJwt = jwt.sign({ id, email, name, type }, process.env.JWT_KEY!);
   return userJwt;
 };
