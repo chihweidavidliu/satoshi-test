@@ -4,8 +4,11 @@ import buildClient from "../api/buildClient";
 import { FadeIn } from "../components/FadeIn";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Dashboard from "../components/Dashboard";
+import OriginatorDashboard from "../components/OriginatorDashboard/OriginatorDashboard";
+import ProducerDashboard from "../components/ProducerDashboard/ProducerDashboard";
 import { IUser } from "../types/IUser";
+import { UserType } from "../types/UserType";
+import Layout from "../components/Layout/Layout";
 
 interface IDashboardPageProps {
   currentUser: IUser | null;
@@ -20,10 +23,21 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
     }
   }, []);
 
+  const renderDashboard = () => {
+    if (currentUser) {
+      return currentUser.type === UserType.ORIGINATOR ? (
+        <OriginatorDashboard currentUser={currentUser} />
+      ) : (
+        <ProducerDashboard currentUser={currentUser} />
+      );
+    }
+  };
   return (
-    <PageWrapper>
-      <FadeIn>{currentUser && <Dashboard currentUser={currentUser} />}</FadeIn>
-    </PageWrapper>
+    <Layout>
+      <PageWrapper>
+        <FadeIn>{renderDashboard()}</FadeIn>
+      </PageWrapper>
+    </Layout>
   );
 };
 

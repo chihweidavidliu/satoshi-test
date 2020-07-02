@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 export const SplashScreen = styled.div`
   position: relative;
-  height: calc(100vh - 55px);
+  height: 100vh;
   display: flex;
   width: 100vw;
   justify-content: center;
@@ -19,7 +19,6 @@ export const SplashScreen = styled.div`
 
 const Logo = styled.img`
   width: 90%;
-
   @media (min-width: ${(props) => props.theme.largeMobileBreakpoint}) {
     width: 376px;
   }

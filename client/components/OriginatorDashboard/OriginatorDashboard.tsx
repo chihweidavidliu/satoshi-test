@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { IUser } from "../types/IUser";
+import { IUser } from "../../types/IUser";
 
 const DashboardWrapper = styled.div`
   width: 90vw;
@@ -26,14 +26,14 @@ const H1 = styled.h1`
   }
 `;
 
-interface IDashboardProps {
+interface IOriginatorDashboardProps {
   currentUser: IUser;
 }
-const Dashboard = ({ currentUser }: IDashboardProps) => {
+const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
   return (
     <DashboardWrapper>
       <TitleWrapper>
-        <H1>Dashboard</H1>
+        <H1>Originator Dashboard</H1>
         <p>{`Welcome ${currentUser.name}`}</p>
         <p>{currentUser.email}</p>
         <p>{currentUser.type}</p>
@@ -42,4 +42,4 @@ const Dashboard = ({ currentUser }: IDashboardProps) => {
   );
 };
 
-export default Dashboard;
+export default OriginatorDashboard;

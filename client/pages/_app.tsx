@@ -4,7 +4,6 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import NProgress from "nprogress";
 import Router from "next/router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Nav from "../components/Nav";
 import buildClient from "../api/buildClient";
 import { AuthProvider } from "../context/AuthContext";
 
@@ -56,7 +55,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <AuthProvider currentUser={pageProps.currentUser}>
-        <Nav />
         <Component {...pageProps} />
       </AuthProvider>
     </ThemeProvider>
