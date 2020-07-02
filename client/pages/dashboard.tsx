@@ -18,7 +18,7 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (!currentUser) {
-      router.push("/");
+      router.push("/signin");
     }
   }, []);
 

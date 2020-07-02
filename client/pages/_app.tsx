@@ -34,7 +34,7 @@ export const theme: ITheme = {
   smallDesktopBreakpoint: "1024px",
   fontFamily: "Roboto",
   bottomBarHeight: "92px",
-  navHeight: "106px",
+  navHeight: "92px",
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`

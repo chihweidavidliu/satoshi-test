@@ -1,72 +1,57 @@
 import React from "react";
-import Navbar from "react-bootstrap/Navbar";
-import Nav from "react-bootstrap/Nav";
 import { useRouter } from "next/dist/client/router";
 import { useAuthContext } from "../../context/AuthContext";
 import styled from "styled-components";
 
-const StyledNavbar = styled(Navbar)`
-  background-color: #78acc6;
+const Spacer = styled.div`
+  height: ${(props) => props.theme.navHeight};
+`;
+
+const Wrapper = styled.div`
+  z-index: 1;
+  background: #78acc6;
+  height: ${(props) => props.theme.navHeight};
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  display: flex;
+  width: 100vw;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 10px;
+  min-width: 300px;
+`;
+
+const Logo = styled.img.attrs({
+  src: "logo.png",
+})`
+  height: 100%;
+`;
+
+const StoneXLogo = styled.img.attrs({
+  src: "stonex-logo.png",
+})`
+  max-width: 150px;
+  width: 100%;
+  height: 60px;
 `;
 
 const CustomNav = () => {
   const router = useRouter();
-  const { currentUser, signout } = useAuthContext();
-
-  const renderLink = (link: { label: string; callback: () => void }) => {
-    return (
-      <Nav.Link onClick={link.callback} className="text-muted">
-        {link.label}
-      </Nav.Link>
-    );
-  };
-
-  const renderLinks = () => {
-    const links = {
-      signOut: { label: "Sign Out", callback: signout },
-      signIn: { label: "Sign In", callback: () => router.push("/signin") },
-      signUp: { label: "Sign Up", callback: () => router.push("/signup") },
-    };
-
-    if (currentUser) {
-      return renderLink(links.signOut);
-    }
-
-    switch (router.pathname) {
-      case "/signin":
-        return renderLink(links.signUp);
-      case "/signup":
-        return renderLink(links.signIn);
-      default:
-        return (
-          <>
-            {renderLink(links.signIn)}
-            {renderLink(links.signUp)}
-          </>
-        );
-    }
-  };
+  const { currentUser } = useAuthContext();
 
   return (
-    <StyledNavbar expand="lg">
-      <Navbar.Brand
-        onClick={() => {
-          const endpoint = currentUser ? "/dashboard" : "/signin";
-          router.push(endpoint);
-        }}
-        style={{ cursor: "pointer" }}
-      >
-        <img src="logo.png" />
-      </Navbar.Brand>
-
-      <Navbar.Toggle aria-controls="basic-navbar-nav" />
-      <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-        {currentUser && (
-          <Nav.Item className="text-dark">{currentUser.name}</Nav.Item>
-        )}
-        {renderLinks()}
-      </Navbar.Collapse>
-    </StyledNavbar>
+    <Spacer>
+      <Wrapper>
+        <Logo />
+        <StoneXLogo
+          onClick={() => {
+            const endpoint = currentUser ? "/dashboard" : "/signin";
+            router.push(endpoint);
+          }}
+        />
+      </Wrapper>
+    </Spacer>
   );
 };
 
