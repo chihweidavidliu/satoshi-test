@@ -11,6 +11,8 @@ export const signin = async (userId?: string) => {
   const payload = {
     id: userId || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
+    name: "testy tester",
+    type: UserType.ORIGINATOR,
   };
 
   // create jwt

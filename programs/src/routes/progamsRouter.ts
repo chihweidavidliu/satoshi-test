@@ -1,9 +1,12 @@
 import { Router, Request, Response } from "express";
 import { body } from "express-validator";
-import { COMMODITY } from "../types/Commodity";
-import { validateRequest } from "../middlewares/validate-request";
+import {
+  validateRequest,
+  COMMODITY,
+  NotFoundError,
+} from "@satoshi-test/common";
+
 import { Program } from "../models/Program";
-import { NotFoundError } from "../errors/not-found-error";
 
 const programsRouter = Router();
 

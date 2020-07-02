@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { UserType } from "../types/UserType";
+import { UserType } from "@satoshi-test/common";
 
 export const createToken = (
   id: string,

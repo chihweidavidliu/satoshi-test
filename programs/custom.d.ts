@@ -1,9 +1,13 @@
+declare enum UserType {
+  PRODUCER = "PRODUCER",
+  ORIGINATOR = "ORIGINATOR",
+}
+
 interface RequestUser {
   id: string;
+  email: string;
   name: string;
-  age: number;
-  score: number;
-  iat: number;
+  type: UserType;
 }
 
 // augment Request object

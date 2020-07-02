@@ -1,10 +1,10 @@
 import express from "express";
 // removes the need to call next() on async errors (can just throw)
 import "express-async-errors";
+import { NotFoundError, errorHandler } from "@satoshi-test/common";
 import cookieSession from "cookie-session";
 import { json } from "body-parser";
-import { errorHandler } from "./middlewares/error-handler";
-import { NotFoundError } from "./errors/not-found-error";
+
 import { enrolmentRouter } from "./routes/enrolmentRouter";
 
 const app = express();

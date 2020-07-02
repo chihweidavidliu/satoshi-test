@@ -1,11 +1,10 @@
 import { Router, Request, Response } from "express";
 import { body } from "express-validator";
+import { validateRequest, BadRequestError } from "@satoshi-test/common";
 
 import { User } from "../models/user";
 import { PasswordManager } from "../services/password-manager";
 import { createToken } from "../services/createToken";
-import { validateRequest } from "../middlewares/validate-request";
-import { BadRequestError } from "../errors/bad-request-error";
 
 const signinRouter = Router();
 

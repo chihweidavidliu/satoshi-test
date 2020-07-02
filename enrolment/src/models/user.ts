@@ -1,6 +1,6 @@
 import mongoose, { Schema, Model, Document } from "mongoose";
+import { UserType } from "@satoshi-test/common";
 import { PasswordManager } from "../services/password-manager";
-import { UserType } from "../types/UserType";
 
 // describes the attributes needed to construct a user
 interface UserAttributes {

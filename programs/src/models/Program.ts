@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model, Document } from "mongoose";
-import { COMMODITY } from "../types/Commodity";
+import { COMMODITY } from "@satoshi-test/common";
 
 interface ProgramAttributes {
   name: string;
