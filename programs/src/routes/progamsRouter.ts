@@ -6,7 +6,7 @@ import {
   NotFoundError,
 } from "@satoshi-test/common";
 
-import { Program } from "../models/Program";
+import { Program } from "../models/program";
 
 const programsRouter = Router();
 

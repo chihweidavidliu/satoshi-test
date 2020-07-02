@@ -2,17 +2,18 @@ import request from "supertest";
 import jwt from "jsonwebtoken";
 import { app } from "../app";
 import mongoose from "mongoose";
+import { UserType } from "@satoshi-test/common";
 
 // sets up authenticated test requests
 // we don't want to reach out to the auth service for our testing (we want our service tests to be isolated)
 // we are going to fake a session
-export const signin = async (userId?: string) => {
+export const signin = async (userId?: string, userType?: UserType) => {
   // build JWT payload
   const payload = {
     id: userId || new mongoose.Types.ObjectId().toHexString(),
     email: "test@test.com",
     name: "testy tester",
-    type: UserType.ORIGINATOR,
+    type: userType || UserType.ORIGINATOR,
   };
 
   // create jwt
