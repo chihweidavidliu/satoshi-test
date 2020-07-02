@@ -5,7 +5,7 @@ import cookieSession from "cookie-session";
 import { json } from "body-parser";
 import { errorHandler } from "./middlewares/error-handler";
 import { NotFoundError } from "./errors/not-found-error";
-import { enrolmentRouter } from "./routes/enrolmentRouter";
+import { programsRouter } from "./routes/progamsRouter";
 
 const app = express();
 
@@ -21,7 +21,7 @@ app.use(
   })
 );
 
-app.use(enrolmentRouter);
+app.use(programsRouter);
 
 app.all("*", (req, res, next) => {
   throw new NotFoundError();

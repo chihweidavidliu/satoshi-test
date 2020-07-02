@@ -25,6 +25,14 @@ build:
         manual:
           - src: "src/**/*.ts"
             dest: .
+    - image: chihweidavidliu/satoshi-programs
+      context: programs
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
     - image: chihweidavidliu/satoshi-client-dev
       context: client
       docker:
