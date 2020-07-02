@@ -23,11 +23,15 @@ const ButtonGrid = styled.div`
   justify-content: space-around;
 `;
 
-const BottomBar = () => {
+interface IBottomBarProps {
+  openMenu: () => void;
+}
+
+const BottomBar = ({ openMenu }) => {
   return (
     <Wrapper>
       <ButtonGrid>
-        <MenuIcon />
+        <MenuIcon onClick={openMenu} />
         <HomeIcon />
         <AddIcon />
       </ButtonGrid>
