@@ -1,11 +1,11 @@
 import Signin from "../components/Signin";
-import { PageWrapper } from "../components/PageWrapper";
+import Layout from "../components/Layout/Layout";
 
 const SigninPage = () => {
   return (
-    <PageWrapper>
+    <Layout>
       <Signin />
-    </PageWrapper>
+    </Layout>
   );
 };
 

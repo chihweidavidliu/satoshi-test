@@ -1,5 +1,4 @@
 import { NextPage, NextPageContext } from "next";
-import { PageWrapper } from "../components/PageWrapper";
 import buildClient from "../api/buildClient";
 import { FadeIn } from "../components/FadeIn";
 import { useEffect } from "react";
@@ -34,9 +33,7 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
   };
   return (
     <Layout>
-      <PageWrapper>
-        <FadeIn>{renderDashboard()}</FadeIn>
-      </PageWrapper>
+      <FadeIn>{renderDashboard()}</FadeIn>
     </Layout>
   );
 };

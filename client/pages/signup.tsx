@@ -1,11 +1,11 @@
 import Signup from "../components/Signup";
-import { PageWrapper } from "../components/PageWrapper";
+import Layout from "../components/Layout/Layout";
 
 const SignupPage = () => {
   return (
-    <PageWrapper>
+    <Layout>
       <Signup />
-    </PageWrapper>
+    </Layout>
   );
 };
 
