@@ -3,7 +3,7 @@ import Layout from "../components/Layout/Layout";
 
 const SigninPage = () => {
   return (
-    <Layout>
+    <Layout isBottomBarDisabled>
       <Signin />
     </Layout>
   );

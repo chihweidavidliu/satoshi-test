@@ -10,7 +10,7 @@ build:
     push: false
   artifacts:
     - image: chihweidavidliu/satoshi-auth
-      context: server
+      context: auth
       docker:
         dockerfile: Dockerfile
       sync:

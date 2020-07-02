@@ -4,7 +4,14 @@ import BottomBar from "./BottomBar";
 import { PageWrapper } from "./PageWrapper";
 import Menu from "./Menu";
 
-const Layout: FunctionComponent = ({ children }) => {
+interface ILayoutProps {
+  isBottomBarDisabled?: boolean;
+}
+
+const Layout: FunctionComponent<ILayoutProps> = ({
+  children,
+  isBottomBarDisabled,
+}) => {
   const [isMenuVisible, setIsMenuVisible] = useState(false);
   return (
     <>
@@ -14,7 +21,9 @@ const Layout: FunctionComponent = ({ children }) => {
       />
       <Nav />
       <PageWrapper>{children}</PageWrapper>
-      <BottomBar openMenu={() => setIsMenuVisible(true)} />
+      {!isBottomBarDisabled && (
+        <BottomBar openMenu={() => setIsMenuVisible(true)} />
+      )}
     </>
   );
 };
