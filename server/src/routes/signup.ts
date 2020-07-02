@@ -26,7 +26,7 @@ signupRouter.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, name, password, type, originatorId } = req.body;
+    const { email, name, password, type, originator } = req.body;
 
     // check email is not taken
     const existingUser = await User.findOne({ email });
@@ -37,7 +37,7 @@ signupRouter.post(
 
     // create a user and save (using our custom build method for type safety)
     // password will be hashed by Mongoose pre hook
-    const user = User.build({ email, name, password, type, originatorId });
+    const user = User.build({ email, name, password, type, originator });
     await user.save();
 
     const userJwt = createToken(user.id, user.email, user.name, user.type);

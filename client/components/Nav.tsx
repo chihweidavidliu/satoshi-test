@@ -50,7 +50,10 @@ const CustomNav = () => {
   return (
     <StyledNavbar expand="lg">
       <Navbar.Brand
-        onClick={() => router.push("/")}
+        onClick={() => {
+          const endpoint = currentUser ? "/dashboard" : "/signin";
+          router.push(endpoint);
+        }}
         style={{ cursor: "pointer" }}
       >
         <img src="logo.png" />

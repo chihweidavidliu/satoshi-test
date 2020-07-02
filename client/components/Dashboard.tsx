@@ -35,8 +35,8 @@ const Dashboard = ({ currentUser }: IDashboardProps) => {
       <TitleWrapper>
         <H1>Dashboard</H1>
         <p>{`Welcome ${currentUser.name}`}</p>
-        <p>Your Age: {currentUser.age}</p>
-        <p>Your Score: {currentUser.score}</p>
+        <p>{currentUser.email}</p>
+        <p>{currentUser.type}</p>
       </TitleWrapper>
     </DashboardWrapper>
   );

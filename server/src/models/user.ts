@@ -8,7 +8,7 @@ interface UserAttributes {
   name: string;
   type: UserType;
   password: string;
-  originatorId?: string;
+  originator?: string;
 }
 
 // describes the properties that a user document has
@@ -25,7 +25,7 @@ const UserSchema: Schema = new Schema(
     name: { type: String, required: true },
     password: { type: String, required: true },
     type: { type: String, required: true },
-    originatorId: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    originator: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
   },
   {
     toJSON: {

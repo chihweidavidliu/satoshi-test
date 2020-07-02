@@ -27,7 +27,7 @@ const A = styled.a`
 `;
 
 const validationSchema = Yup.object({
-  username: Yup.string().required("Name is required"),
+  email: Yup.string().required("Email is required"),
   password: Yup.string()
     .required("Password is required")
     .min(5, "Password should be at least 5 characters long"),
@@ -54,7 +54,7 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
   } = useFormik({
     validationSchema,
     initialValues: {
-      username: "",
+      email: "",
       password: "",
     },
     onSubmit,
@@ -66,7 +66,7 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
     url: endpoint,
     method: HTTP_METHOD.POST,
     body: {
-      name: values.username,
+      email: values.email,
       password: values.password,
     },
     onSuccess: () => router.push("/dashboard"),
@@ -79,15 +79,15 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
             <Form.Control
-              placeholder="Name"
-              name="username"
-              value={values.username}
+              placeholder="Email"
+              name="email"
+              value={values.email}
               onChange={handleChange}
               onBlur={handleBlur}
             />
           </Form.Group>
-          {touched.username && errors.username && (
-            <Alert variant="danger">{errors.username}</Alert>
+          {touched.email && errors.email && (
+            <Alert variant="danger">{errors.email}</Alert>
           )}
 
           <Form.Group controlId="formBasicPassword">

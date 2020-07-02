@@ -10,6 +10,7 @@ import { useRequest } from "../hooks/useRequest";
 import { HTTP_METHOD } from "../types/httpMethod";
 import { useRouter } from "next/router";
 import { FadeIn } from "./FadeIn";
+import { UserType } from "../types/UserType";
 
 const H2 = styled.h2`
   margin-bottom: 20px;
@@ -27,12 +28,13 @@ const A = styled.a`
 `;
 
 const validationSchema = Yup.object({
+  email: Yup.string()
+    .email("Valid email is required")
+    .required("Email is required"),
   username: Yup.string().required("Name is required"),
   password: Yup.string()
     .required("Password is required")
     .min(5, "Password should be at least 5 characters long"),
-  age: Yup.number().min(0, "Age must be over 0").required("Age is required"),
-  score: Yup.number().min(0, "Min score is 0").required("Score is required"),
 });
 
 const SigninSignup = () => {
@@ -52,10 +54,10 @@ const SigninSignup = () => {
   } = useFormik({
     validationSchema,
     initialValues: {
+      email: "",
       username: "",
       password: "",
-      age: "",
-      score: "",
+      type: "",
     },
     onSubmit,
   });
@@ -68,8 +70,8 @@ const SigninSignup = () => {
     body: {
       name: values.username,
       password: values.password,
-      age: values.age,
-      score: values.score,
+      email: values.email,
+      type: UserType.ORIGINATOR,
     },
     onSuccess: () => router.push("/dashboard"),
   });
@@ -77,12 +79,24 @@ const SigninSignup = () => {
   return (
     <FadeIn>
       <Card>
-        <H2>Sign Up</H2>
+        <H2>Sign Up (Originator)</H2>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
-            <Form.Label>Name</Form.Label>
             <Form.Control
-              placeholder="Enter name"
+              placeholder="Email"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Form.Group>
+          {touched.email && errors.email && (
+            <Alert variant="danger">{errors.email}</Alert>
+          )}
+
+          <Form.Group controlId="formBasicName">
+            <Form.Control
+              placeholder="Name"
               name="username"
               value={values.username}
               onChange={handleChange}
@@ -94,7 +108,6 @@ const SigninSignup = () => {
           )}
 
           <Form.Group controlId="formBasicPassword">
-            <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
               placeholder="Password"
@@ -106,34 +119,6 @@ const SigninSignup = () => {
           </Form.Group>
           {touched.password && errors.password && (
             <Alert variant="danger">{errors.password}</Alert>
-          )}
-          <Form.Group controlId="age">
-            <Form.Label>Age</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Age"
-              name="age"
-              value={values.age}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Form.Group>
-          {touched.age && errors.age && (
-            <Alert variant="danger">{errors.age}</Alert>
-          )}
-          <Form.Group controlId="score">
-            <Form.Label>Score</Form.Label>
-            <Form.Control
-              type="number"
-              placeholder="Score"
-              name="score"
-              value={values.score}
-              onChange={handleChange}
-              onBlur={handleBlur}
-            />
-          </Form.Group>
-          {touched.score && errors.score && (
-            <Alert variant="danger">{errors.score}</Alert>
           )}
 
           <div className="text-center">
