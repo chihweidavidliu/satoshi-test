@@ -5,7 +5,6 @@ import { signin, createUser } from "../../test/authHelper";
 import { UserType } from "@satoshi-test/common";
 import { Enrolment } from "../../models/enrolment";
 import { createProgram } from "../../test/createProgram";
-import { User } from "../../models/user";
 
 describe("POST /api/enrolment", () => {
   it("should return 401 if user is not signed in", async () => {
@@ -170,6 +169,51 @@ describe("POST /api/enrolment", () => {
     expect(enrolment?.producer == producer).toBeTruthy();
     expect(enrolment?.originator == originator).toBeTruthy();
     expect(enrolment?.apv == apv).toBeTruthy();
+  });
+});
+
+describe("GET /api/enrolment/producers", () => {
+  it("should return 401 if user is not authenticated or is not Originator", async () => {
+    await request(app).get("/api/enrolment/producers").send().expect(401);
+
+    const producer = await createUser("david@test.com", UserType.PRODUCER);
+    const cookie = await signin(producer.id, UserType.PRODUCER);
+
+    await request(app)
+      .get("/api/enrolment/producers?email=ste")
+      .set("Cookie", cookie)
+      .send()
+      .expect(401);
+  });
+
+  it("should return list of matching producers", async () => {
+    // create dummy originator
+
+    const originator = await createUser("david@test.com", UserType.ORIGINATOR);
+    const cookie = await signin(originator.id, UserType.ORIGINATOR);
+
+    // create dummy users
+    const steve = await createUser("steve@test.com", UserType.PRODUCER);
+    const bob = await createUser("bob@test.com", UserType.PRODUCER);
+
+    // search for producers
+    const response = await request(app)
+      .get("/api/enrolment/producers?email=ste")
+      .set("Cookie", cookie)
+      .send()
+      .expect(200);
+
+    expect(response.body.length).toEqual(1);
+    expect(response.body[0]).toMatchObject(JSON.parse(JSON.stringify(steve)));
+
+    const response2 = await request(app)
+      .get("/api/enrolment/producers?email=bob")
+      .set("Cookie", cookie)
+      .send()
+      .expect(200);
+
+    expect(response2.body.length).toEqual(1);
+    expect(response2.body[0]).toMatchObject(JSON.parse(JSON.stringify(bob)));
   });
 });
 

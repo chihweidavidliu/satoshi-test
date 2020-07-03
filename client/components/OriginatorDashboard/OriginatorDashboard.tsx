@@ -33,7 +33,7 @@ const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
   return (
     <DashboardWrapper>
       <TitleWrapper>
-        <H1>Originator Dashboard</H1>
+        <H1>Enrol in M+</H1>
         <p>{`Welcome ${currentUser.name}`}</p>
         <p>{currentUser.email}</p>
         <p>{currentUser.type}</p>

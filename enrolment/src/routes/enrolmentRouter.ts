@@ -10,8 +10,34 @@ import {
 import mongoose from "mongoose";
 import { body } from "express-validator";
 import { Enrolment } from "../models/enrolment";
+import { User } from "../models/user";
 
 const enrolmentRouter = Router();
+
+// TODO: this should probably go into a registration service
+// get a list of eligible producers
+enrolmentRouter.get(
+  "/api/enrolment/producers",
+  currentUser,
+  requireOriginatorAuth,
+  async (req, res) => {
+    const { email } = req.query;
+
+    if (!email) {
+      return res.send([]);
+    }
+
+    const regex = new RegExp(`.*${email}.*`, "i");
+
+    // TODO: add pagination
+    const users = await User.find({
+      email: regex,
+      type: UserType.PRODUCER,
+    });
+
+    res.send(users);
+  }
+);
 
 enrolmentRouter.post(
   "/api/enrolment",
