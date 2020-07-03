@@ -1,6 +1,6 @@
 import { IUser } from "../types/IUser";
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { UserType } from "../types/UserType";
 
 export const useAuthRequirement = (
@@ -9,12 +9,17 @@ export const useAuthRequirement = (
 ) => {
   const router = useRouter();
 
+  const [isAuthValid, setIsAuthValid] = useState(false);
+
   useEffect(() => {
-    if (
-      !currentUser ||
-      (currentUser && userType && currentUser.type !== userType)
-    ) {
+    if (!currentUser) {
       router.push("/signin");
+    } else if (currentUser && userType && currentUser.type !== userType) {
+      router.push("/dashboard");
+    } else {
+      setIsAuthValid(true);
     }
   }, []);
+
+  return isAuthValid;
 };

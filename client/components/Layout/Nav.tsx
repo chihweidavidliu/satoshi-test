@@ -43,13 +43,13 @@ const CustomNav = () => {
   return (
     <Spacer>
       <Wrapper>
-        <Logo />
-        <StoneXLogo
+        <Logo
           onClick={() => {
             const endpoint = currentUser ? "/dashboard" : "/signin";
             router.push(endpoint);
           }}
         />
+        <StoneXLogo />
       </Wrapper>
     </Spacer>
   );
