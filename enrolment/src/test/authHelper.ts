@@ -1,8 +1,7 @@
-import request from "supertest";
 import jwt from "jsonwebtoken";
-import { app } from "../app";
 import mongoose from "mongoose";
 import { UserType } from "@satoshi-test/common";
+import { User } from "../models/user";
 
 // sets up authenticated test requests
 // we don't want to reach out to the auth service for our testing (we want our service tests to be isolated)
@@ -31,4 +30,10 @@ export const signin = async (userId?: string, userType?: UserType) => {
   // return a string that's the cookie with the encoded data
   // supertest expects an array of cookies
   return [`express:sess=${base64}`];
+};
+
+export const createUser = async (email: string, type: UserType) => {
+  const user = User.build({ name: "user", email, type, password: "password" });
+  await user.save();
+  return user;
 };

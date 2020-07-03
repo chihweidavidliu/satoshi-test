@@ -5,6 +5,7 @@ import {
   validateRequest,
   UserType,
   BadRequestError,
+  requireOriginatorAuth,
 } from "@satoshi-test/common";
 import mongoose from "mongoose";
 import { body } from "express-validator";
@@ -15,7 +16,7 @@ const enrolmentRouter = Router();
 enrolmentRouter.post(
   "/api/enrolment",
   currentUser,
-  requireAuth,
+  requireOriginatorAuth,
   [
     body("producer")
       .not()
@@ -38,14 +39,22 @@ enrolmentRouter.post(
   async (req: Request, res: Response) => {
     const { producer, originator, program, apv } = req.body;
 
-    const existingEnrolment = Enrolment.findOne({ producer, program });
+    const existingEnrolment = await Enrolment.findOne({ producer, program });
 
     if (existingEnrolment) {
       throw new BadRequestError("Producer is already enrolled on this program");
     }
+
     const enrolment = Enrolment.build({ producer, originator, program, apv });
     await enrolment.save();
-    res.send(enrolment);
+
+    const result = await enrolment
+      .populate("producer")
+      .populate("originator")
+      .populate("program")
+      .execPopulate();
+
+    res.status(201).send(result);
   }
 );
 
@@ -57,11 +66,15 @@ enrolmentRouter.get(
     const { id, type } = req.currentUser as RequestUser;
 
     if (type === UserType.ORIGINATOR) {
-      const enrolments = Enrolment.find({ originator: id });
+      const enrolments = await Enrolment.find({ originator: id })
+        .populate("producer")
+        .populate("program");
       return res.send(enrolments);
     }
 
-    const enrolments = Enrolment.find({ producer: id });
+    const enrolments = await Enrolment.find({ producer: id })
+      .populate("originator")
+      .populate("program");
     return res.send(enrolments);
   }
 );
