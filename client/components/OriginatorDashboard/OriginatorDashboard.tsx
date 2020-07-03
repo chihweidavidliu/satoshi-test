@@ -9,8 +9,6 @@ import { Button } from "../Button";
 
 const DashboardWrapper = styled.div`
   width: 90vw;
-  background: whitesmoke;
-  border-radius: 5px;
   @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
     width: auto;
     padding: 30px;
@@ -38,6 +36,11 @@ const H2 = styled.h2`
   @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
     font-size: 36px;
   }
+`;
+
+const ButtonGrid = styled.div`
+  display: grid;
+  grid-gap: 30px;
 `;
 
 const loadOptions = async (inputValue: string) => {
@@ -76,26 +79,30 @@ const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
         <H1>Enrol in M+</H1>
         <p>{`Welcome ${currentUser.name}`}</p>
 
-        <Link href={"/new-producer"}>
-          <Button isUpperCase isFullWidth>
-            <H2>Add new customer</H2>
+        <ButtonGrid>
+          <Link href={"/new-producer"}>
+            <Button isUpperCase isFullWidth>
+              <H2>Add new customer</H2>
+            </Button>
+          </Link>
+
+          <AsyncSelect
+            onFocus={() => setSelectedProducer(null)}
+            isSearchable
+            placeholder="Find current customer"
+            value={selectedProducer}
+            onChange={(selectedProducer) =>
+              setSelectedProducer(selectedProducer as IOption)
+            }
+            onInputChange={(newValue: string) => setInputValue(newValue)}
+            loadOptions={() => loadOptionsDebounced(inputValue)}
+            noOptionsMessage={() => "No Matches Found"}
+          />
+
+          <Button isUpperCase isFullWidth disabled={!selectedProducer}>
+            <H2>Start Enrolment</H2>
           </Button>
-        </Link>
-
-        <AsyncSelect
-          placeholder="Find current customer"
-          value={selectedProducer}
-          onChange={(selectedProducer) =>
-            setSelectedProducer(selectedProducer as IOption)
-          }
-          onInputChange={(newValue: string) => setInputValue(newValue)}
-          loadOptions={() => loadOptionsDebounced(inputValue)}
-          noOptionsMessage={() => "No Matches Found"}
-        />
-
-        <Button isUpperCase isFullWidth>
-          <H2>Start Enrolment</H2>
-        </Button>
+        </ButtonGrid>
       </TitleWrapper>
     </DashboardWrapper>
   );
