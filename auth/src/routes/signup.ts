@@ -38,12 +38,15 @@ signupRouter.post(
     const user = User.build({ email, name, password, type, originator });
     await user.save();
 
-    const userJwt = createToken(user.id, user.email, user.name, user.type);
-    // store jwt in session object
-    // @ts-ignore
-    req.session = {
-      jwt: userJwt,
-    };
+    // onl originators can sign up and be given an auth token (as producers are signed up via an originator in the originator dashboard)
+    if (user.type === UserType.ORIGINATOR) {
+      const userJwt = createToken(user.id, user.email, user.name, user.type);
+      // store jwt in session object
+      // @ts-ignore
+      req.session = {
+        jwt: userJwt,
+      };
+    }
 
     res.status(201).send(user);
   }

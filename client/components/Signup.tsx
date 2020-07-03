@@ -37,7 +37,11 @@ const validationSchema = Yup.object({
     .min(5, "Password should be at least 5 characters long"),
 });
 
-const SigninSignup = () => {
+interface ISignupProps {
+  userType?: UserType;
+  isSigninLinkDisabled?: boolean;
+}
+const Signup = ({ userType, isSigninLinkDisabled }: ISignupProps) => {
   const router = useRouter();
 
   const onSubmit = async () => {
@@ -57,7 +61,6 @@ const SigninSignup = () => {
       email: "",
       username: "",
       password: "",
-      type: "",
     },
     onSubmit,
   });
@@ -71,7 +74,7 @@ const SigninSignup = () => {
       name: values.username,
       password: values.password,
       email: values.email,
-      type: UserType.ORIGINATOR,
+      type: userType || UserType.ORIGINATOR,
     },
     onSuccess: () => router.push("/dashboard"),
   });
@@ -79,7 +82,7 @@ const SigninSignup = () => {
   return (
     <FadeIn>
       <Card>
-        <H2>Sign Up (Originator)</H2>
+        <H2>Sign Up ({userType || "Originator"})</H2>
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formBasicEmail">
             <Form.Control
@@ -131,22 +134,25 @@ const SigninSignup = () => {
             </Button>
           </div>
           {apiErrors}
-          <P>
-            Already have an account? Click{" "}
-            <A
-              className="text-primary"
-              onClick={() => {
-                router.push("/signin");
-              }}
-            >
-              here
-            </A>{" "}
-            to sign in
-          </P>
+
+          {!isSigninLinkDisabled && (
+            <P>
+              Already have an account? Click{" "}
+              <A
+                className="text-primary"
+                onClick={() => {
+                  router.push("/signin");
+                }}
+              >
+                here
+              </A>{" "}
+              to sign in
+            </P>
+          )}
         </Form>
       </Card>
     </FadeIn>
   );
 };
 
-export default SigninSignup;
+export default Signup;

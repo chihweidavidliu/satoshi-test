@@ -33,7 +33,7 @@ export const theme: ITheme = {
   tabletBreakpoint: "767px",
   smallDesktopBreakpoint: "1024px",
   fontFamily: "Roboto",
-  bottomBarHeight: "92px",
+  bottomBarHeight: "70px",
   navHeight: "92px",
 };
 

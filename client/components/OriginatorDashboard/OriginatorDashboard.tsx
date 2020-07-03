@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import Link from "next/link";
 import { IUser } from "../../types/IUser";
 import { Button } from "../Button";
 
@@ -49,9 +50,11 @@ const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
         <p>{currentUser.email}</p>
         <p>{currentUser.type}</p>
 
-        <Button isUpperCase isFullWidth>
-          <H2>Add new customer</H2>
-        </Button>
+        <Link href={"/new-producer"}>
+          <Button isUpperCase isFullWidth>
+            <H2>Add new customer</H2>
+          </Button>
+        </Link>
 
         <Button isUpperCase isFullWidth>
           <H2>Start Enrolment</H2>

@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import { MenuIcon } from "../icons/MenuIcon";
-import { HomeIcon } from "../icons/HomeIcon";
-import { AddIcon } from "../icons/AddIcon";
+import { SmallMenuIcon } from "../icons/MenuIcon";
+import { SmallHomeIcon } from "../icons/HomeIcon";
+import { SmallAddIcon } from "../icons/AddIcon";
 import { useRouter } from "next/router";
 
 const Wrapper = styled.div`
-  height: 92px;
+  height: ${(props) => props.theme.bottomBarHeight};
   width: 100vw;
   min-width: 300px;
   position: fixed;
@@ -23,6 +23,7 @@ const ButtonGrid = styled.div`
   max-width: 400px;
   width: 100%;
   justify-content: space-around;
+  align-items: center;
 `;
 
 interface IBottomBarProps {
@@ -39,9 +40,9 @@ const BottomBar = ({ openMenu }: IBottomBarProps) => {
   return (
     <Wrapper>
       <ButtonGrid>
-        <MenuIcon onClick={openMenu} />
-        <HomeIcon onClick={handleHomeClick} />
-        <AddIcon />
+        <SmallMenuIcon onClick={openMenu} />
+        <SmallHomeIcon onClick={handleHomeClick} />
+        <SmallAddIcon />
       </ButtonGrid>
     </Wrapper>
   );
