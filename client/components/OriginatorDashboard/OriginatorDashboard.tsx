@@ -99,9 +99,11 @@ const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
             noOptionsMessage={() => "No Matches Found"}
           />
 
-          <Button isUpperCase isFullWidth disabled={!selectedProducer}>
-            <H2>Start Enrolment</H2>
-          </Button>
+          <Link href={"/enrol"}>
+            <Button isUpperCase isFullWidth disabled={!selectedProducer}>
+              <H2>Start Enrolment</H2>
+            </Button>
+          </Link>
         </ButtonGrid>
       </TitleWrapper>
     </DashboardWrapper>

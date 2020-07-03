@@ -6,6 +6,7 @@ import {
   UserType,
   BadRequestError,
   requireOriginatorAuth,
+  NotFoundError,
 } from "@satoshi-test/common";
 import mongoose from "mongoose";
 import { body } from "express-validator";
@@ -36,6 +37,22 @@ enrolmentRouter.get(
     });
 
     res.send(users);
+  }
+);
+
+enrolmentRouter.get(
+  "/api/enrolment/producers/:producerId",
+  currentUser,
+  requireOriginatorAuth,
+  async (req, res) => {
+    const { producerId } = req.params;
+    const user = await User.findById(producerId);
+
+    if (!user) {
+      throw new NotFoundError();
+    }
+
+    res.send(user);
   }
 );
 

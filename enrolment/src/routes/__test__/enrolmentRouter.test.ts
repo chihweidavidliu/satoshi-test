@@ -172,6 +172,39 @@ describe("POST /api/enrolment", () => {
   });
 });
 
+describe("GET /api/enrolment/producers/:producerId", () => {
+  it("should return 401 if user is not authenticated or is not Originator", async () => {
+    await request(app).get("/api/enrolment/producers").send().expect(401);
+
+    const producer = await createUser("david@test.com", UserType.PRODUCER);
+    const cookie = await signin(producer.id, UserType.PRODUCER);
+
+    await request(app)
+      .get(`/api/enrolment/producers/${producer.id}`)
+      .set("Cookie", cookie)
+      .send()
+      .expect(401);
+  });
+
+  it("should return 200 and producer", async () => {
+    // create dummy originator
+    const originator = await createUser("david@test.com", UserType.ORIGINATOR);
+    const cookie = await signin(originator.id, UserType.ORIGINATOR);
+
+    // create dummy user
+    const steve = await createUser("steve@test.com", UserType.PRODUCER);
+
+    // search for producers
+    const response = await request(app)
+      .get(`/api/enrolment/producers/${steve.id}`)
+      .set("Cookie", cookie)
+      .send()
+      .expect(200);
+
+    expect(response.body).toMatchObject(JSON.parse(JSON.stringify(steve)));
+  });
+});
+
 describe("GET /api/enrolment/producers", () => {
   it("should return 401 if user is not authenticated or is not Originator", async () => {
     await request(app).get("/api/enrolment/producers").send().expect(401);
