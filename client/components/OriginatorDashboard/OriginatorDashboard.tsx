@@ -99,7 +99,7 @@ const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
             noOptionsMessage={() => "No Matches Found"}
           />
 
-          <Link href={"/enrol"}>
+          <Link href={`/enrol?producerId=${selectedProducer?.user.id}`}>
             <Button isUpperCase isFullWidth disabled={!selectedProducer}>
               <H2>Start Enrolment</H2>
             </Button>
