@@ -12,6 +12,7 @@ import mongoose from "mongoose";
 import { body } from "express-validator";
 import { Enrolment } from "../models/enrolment";
 import { User } from "../models/user";
+import { Program } from "../models/program";
 
 const enrolmentRouter = Router();
 
@@ -89,12 +90,13 @@ enrolmentRouter.post(
     }
 
     const enrolment = Enrolment.build({ producer, originator, program, apv });
+
     await enrolment.save();
 
     const result = await enrolment
-      .populate("producer")
-      .populate("originator")
-      .populate("program")
+      .populate({ path: "producer", model: User })
+      .populate({ path: "originator", model: User })
+      .populate({ path: "program", model: Program })
       .execPopulate();
 
     res.status(201).send(result);
@@ -110,14 +112,15 @@ enrolmentRouter.get(
 
     if (type === UserType.ORIGINATOR) {
       const enrolments = await Enrolment.find({ originator: id })
-        .populate("producer")
-        .populate("program");
+        .populate({ path: "producer", model: User })
+        .populate({ path: "program", model: Program });
       return res.send(enrolments);
     }
 
     const enrolments = await Enrolment.find({ producer: id })
-      .populate("originator")
-      .populate("program");
+
+      .populate({ path: "originator", model: User })
+      .populate({ path: "program", model: Program });
     return res.send(enrolments);
   }
 );

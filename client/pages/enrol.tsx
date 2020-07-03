@@ -33,7 +33,9 @@ const EnrolPage = ({ currentUser }: IEnrolPageProps) => {
 
   return (
     <Layout>
-      {isAuthValid && producer && <Enrolment producer={producer} />}
+      {isAuthValid && producer && (
+        <Enrolment producer={producer} currentUser={currentUser} />
+      )}
     </Layout>
   );
 };
