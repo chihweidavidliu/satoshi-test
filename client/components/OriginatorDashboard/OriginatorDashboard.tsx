@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import Link from "next/link";
+import AwesomeDebouncePromise from "awesome-debounce-promise";
+import AsyncSelect from "react-select/async";
 import { IUser } from "../../types/IUser";
 import { Button } from "../Button";
 
@@ -37,24 +40,58 @@ const H2 = styled.h2`
   }
 `;
 
+const loadOptions = async (inputValue: string) => {
+  const response = await axios.get(
+    `/api/enrolment/producers?email=${inputValue}`
+  );
+
+  return response.data.map((user: IUser) => ({
+    value: user.id,
+    label: user.email,
+    user: user,
+  }));
+};
+
+const loadOptionsDebounced = AwesomeDebouncePromise(loadOptions, 500);
+
+interface IOption {
+  value: string;
+  label: string;
+  user: IUser;
+}
+
 interface IOriginatorDashboardProps {
   currentUser: IUser;
 }
 
 const OriginatorDashboard = ({ currentUser }: IOriginatorDashboardProps) => {
+  const [selectedProducer, setSelectedProducer] = useState<IOption | null>(
+    null
+  );
+  const [inputValue, setInputValue] = useState("");
+
   return (
     <DashboardWrapper>
       <TitleWrapper>
         <H1>Enrol in M+</H1>
         <p>{`Welcome ${currentUser.name}`}</p>
-        <p>{currentUser.email}</p>
-        <p>{currentUser.type}</p>
 
         <Link href={"/new-producer"}>
           <Button isUpperCase isFullWidth>
             <H2>Add new customer</H2>
           </Button>
         </Link>
+
+        <AsyncSelect
+          placeholder="Find current customer"
+          value={selectedProducer}
+          onChange={(selectedProducer) =>
+            setSelectedProducer(selectedProducer as IOption)
+          }
+          onInputChange={(newValue: string) => setInputValue(newValue)}
+          loadOptions={() => loadOptionsDebounced(inputValue)}
+          noOptionsMessage={() => "No Matches Found"}
+        />
 
         <Button isUpperCase isFullWidth>
           <H2>Start Enrolment</H2>
