@@ -31,11 +31,14 @@ enrolmentRouter.get(
 
     const regex = new RegExp(`.*${email}.*`, "i");
 
-    // TODO: add pagination
-    const users = await User.find({
-      email: regex,
-      type: UserType.PRODUCER,
-    });
+    const users = await User.find(
+      {
+        email: regex,
+        type: UserType.PRODUCER,
+      },
+      null,
+      { limit: 10 }
+    );
 
     res.send(users);
   }
