@@ -22,16 +22,36 @@ const IconGrid = styled.div`
   justify-content: space-around;
 `;
 
+const MENU_ORDER = [
+  ProducerMenuItem.OVERVIEW,
+  ProducerMenuItem.CHARTS,
+  ProducerMenuItem.NEWS,
+];
+
 interface IMenuBarProps {
   selectedMenuItem: ProducerMenuItem;
   handleSelect: (selected: ProducerMenuItem) => void;
 }
 
 const MenuBar = ({ selectedMenuItem, handleSelect }: IMenuBarProps) => {
+  const back = () => {
+    const currentIndex = MENU_ORDER.indexOf(selectedMenuItem);
+    if (currentIndex - 1 >= 0) {
+      handleSelect(MENU_ORDER[currentIndex - 1]);
+    }
+  };
+
+  const forward = () => {
+    const currentIndex = MENU_ORDER.indexOf(selectedMenuItem);
+    if (currentIndex + 1 < MENU_ORDER.length) {
+      handleSelect(MENU_ORDER[currentIndex + 1]);
+    }
+  };
+
   return (
     <MenuBarWrapper>
       <IconGrid>
-        <LeftChevron />
+        <LeftChevron onClick={back} />
         <DollarIcon
           isSelected={selectedMenuItem === ProducerMenuItem.OVERVIEW}
           onClick={() => handleSelect(ProducerMenuItem.OVERVIEW)}
@@ -44,7 +64,7 @@ const MenuBar = ({ selectedMenuItem, handleSelect }: IMenuBarProps) => {
           isSelected={selectedMenuItem === ProducerMenuItem.NEWS}
           onClick={() => handleSelect(ProducerMenuItem.NEWS)}
         />
-        <RightChevron />
+        <RightChevron onClick={forward} />
       </IconGrid>
     </MenuBarWrapper>
   );
