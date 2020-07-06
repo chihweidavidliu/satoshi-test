@@ -51,7 +51,7 @@ const Menu = ({ isVisible, handleClose }: IMenuProps) => {
       <Content>
         <button onClick={handleClose}>Close</button>
         <Link href="/track-enrolments">
-          <MenuItem>Track Enrolments</MenuItem>
+          <MenuItem onClick={handleClose}>Track Enrolments</MenuItem>
         </Link>
 
         <MenuItem

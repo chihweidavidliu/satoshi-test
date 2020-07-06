@@ -5,6 +5,8 @@ import {
   sortEnrolmentsByProducer,
   IEnrolmentsByProducer,
 } from "../../utils/sortEnrolmentsByProducer";
+import EnrolmentList from "./EnrolmentList";
+import { ContentWrapper } from "../Layout/ContentWrapper";
 
 const TrackEnrolment = () => {
   const [
@@ -15,35 +17,28 @@ const TrackEnrolment = () => {
   useEffect(() => {
     getEnrolments()
       .then((response) => {
-        console.log("enrolments", response.data);
-
         const { data } = response;
-
         const dataByProducer = sortEnrolmentsByProducer(data);
         setEnrolmentsByProducer(dataByProducer);
-        console.log("data", dataByProducer);
       })
       .catch((error) => alert(error));
   }, []);
 
   return (
-    <div>
+    <ContentWrapper>
       <H1>Track Enrolments</H1>
 
       {enrolmentsByProducer &&
         Object.keys(enrolmentsByProducer).map((email) => {
           return (
-            <div key={email}>
-              <p>{email}</p>
-              <div>
-                {enrolmentsByProducer[email].map((enrolment) => {
-                  return <div key={enrolment.id}>{enrolment.program.name}</div>;
-                })}
-              </div>
-            </div>
+            <EnrolmentList
+              key={email}
+              email={email}
+              enrolments={enrolmentsByProducer[email]}
+            />
           );
         })}
-    </div>
+    </ContentWrapper>
   );
 };
 

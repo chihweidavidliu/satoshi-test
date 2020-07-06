@@ -34,7 +34,7 @@ const ProgramCard = ({
       <div>{program.name}</div>
       <div>{program.commodity}</div>
       <div>
-        {Dinero({ amount: program.currentPrice, currency: "GBP" }).toFormat(
+        {Dinero({ amount: program.currentPrice, currency: "USD" }).toFormat(
           "$0,0.00"
         )}
       </div>

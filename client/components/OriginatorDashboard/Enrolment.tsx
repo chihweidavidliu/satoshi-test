@@ -12,13 +12,7 @@ import { getPrograms } from "./api/getPrograms";
 import ProgramCard from "./ProgramCard";
 import { enrolProducer } from "./api/enrolProducer";
 import { useRouter } from "next/router";
-
-const EnrolmentWrapper = styled.div`
-  width: 100%;
-  max-width: 600px;
-  padding: 15px;
-  height: 100%;
-`;
+import { ContentWrapper } from "../Layout/ContentWrapper";
 
 const StyledForm = styled(Form)`
   display: grid;
@@ -99,7 +93,7 @@ const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
   });
 
   return (
-    <EnrolmentWrapper>
+    <ContentWrapper>
       Select a program for {producer.email}
       <StyledForm onSubmit={handleSubmit}>
         <div>APV</div>
@@ -142,7 +136,7 @@ const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
           Submit
         </Button>
       </StyledForm>
-    </EnrolmentWrapper>
+    </ContentWrapper>
   );
 };
 
