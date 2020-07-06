@@ -13,6 +13,8 @@ import ProgramCard from "./ProgramCard";
 import { enrolProducer } from "./api/enrolProducer";
 import { useRouter } from "next/router";
 import { ContentWrapper } from "../Layout/ContentWrapper";
+import { getEnrolmentsByProducerId } from "./api/getEnrolmentsByProducerId";
+import { IEnrolment } from "../../utils/sortEnrolmentsByProducer";
 
 const StyledForm = styled(Form)`
   height: 100%;
@@ -49,12 +51,24 @@ interface IEnrolmentProps {
 
 const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
   const [programs, setPrograms] = useState<IProgram[]>([]);
+  const [existingEnrolments, setExistingEnrolments] = useState<string[]>([]);
   const router = useRouter();
 
   useEffect(() => {
-    getPrograms().then(({ data }) => {
-      setPrograms(data);
-    });
+    const fetchPrograms = async () => {
+      const response = await getEnrolmentsByProducerId(producer.id);
+      const programIds = response.data.map(
+        (enrolment: IEnrolment) => enrolment.program.id
+      );
+      setExistingEnrolments(programIds);
+
+      const programResponse = await getPrograms();
+      const programs = programResponse.data;
+
+      return programs;
+    };
+
+    fetchPrograms().then((programs) => setPrograms(programs));
   }, []);
 
   const onSubmit = async (values: FormikValues) => {
@@ -127,6 +141,7 @@ const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
                 <ProgramCard
                   key={program.id}
                   program={program}
+                  isAlreadyEnrolled={existingEnrolments.includes(program.id)}
                   isSelected={values.program === program.id}
                   handleSelect={() => {
                     if (values.program === program.id) {

@@ -21,6 +21,7 @@ const ProgramCardWrapper = styled.div<{ isSelected: boolean }>`
 interface IProgramCardProps {
   program: IProgram;
   isSelected: boolean;
+  isAlreadyEnrolled?: boolean;
   handleSelect: () => void;
 }
 
@@ -28,6 +29,7 @@ const ProgramCard = ({
   program,
   isSelected,
   handleSelect,
+  isAlreadyEnrolled,
 }: IProgramCardProps) => {
   return (
     <ProgramCardWrapper isSelected={isSelected} onClick={handleSelect}>
@@ -38,6 +40,7 @@ const ProgramCard = ({
           "$0,0.00"
         )}
       </div>
+      <div>{isAlreadyEnrolled && "(Already Enrolled)"}</div>
     </ProgramCardWrapper>
   );
 };
