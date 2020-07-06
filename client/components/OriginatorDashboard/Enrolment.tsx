@@ -79,7 +79,7 @@ const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
         throw new Error("Program not found");
       }
 
-      await enrolProducer(currentUser, producer, program, values.apv);
+      await enrolProducer(currentUser, producer, program, values.apv * 100);
 
       alert(
         `${producer.name} has successfully been enrolled to ${program.name}. Redirecting...`
@@ -121,7 +121,7 @@ const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
           <div>APV</div>
           <Form.Control
             type="number"
-            placeholder="Enter APV"
+            placeholder="Enter APV in $"
             name="apv"
             value={values.apv}
             onChange={handleChange}
