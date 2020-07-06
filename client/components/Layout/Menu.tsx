@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useAuthContext } from "../../context/AuthContext";
 import Link from "next/link";
+import { UserType } from "../../types/UserType";
 
 interface IMenuWrapperProps {
   isVisible: boolean;
@@ -45,14 +46,17 @@ interface IMenuProps {
 }
 
 const Menu = ({ isVisible, handleClose }: IMenuProps) => {
-  const { signout } = useAuthContext();
+  const { signout, currentUser } = useAuthContext();
   return (
     <MenuWrapper isVisible={isVisible}>
       <Content>
         <button onClick={handleClose}>Close</button>
-        <Link href="/track-enrolments">
-          <MenuItem onClick={handleClose}>Track Enrolments</MenuItem>
-        </Link>
+
+        {currentUser && currentUser.type === UserType.ORIGINATOR && (
+          <Link href="/track-enrolments">
+            <MenuItem onClick={handleClose}>Track Enrolments</MenuItem>
+          </Link>
+        )}
 
         <MenuItem
           onClick={() => {

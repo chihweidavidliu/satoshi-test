@@ -13,7 +13,7 @@ interface ITrackEnrolmentsPageProps {
 
 const TrackEnrolmentsPage = ({ currentUser }: ITrackEnrolmentsPageProps) => {
   const isAuthValid = useAuthRequirement(currentUser, UserType.ORIGINATOR);
-  return <Layout>{isAuthValid && <TrackEnrolment}</Layout>;
+  return <Layout>{isAuthValid && <TrackEnrolment />}</Layout>;
 };
 
 export default TrackEnrolmentsPage;

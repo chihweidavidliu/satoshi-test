@@ -27,7 +27,7 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
       return currentUser.type === UserType.ORIGINATOR ? (
         <OriginatorDashboard currentUser={currentUser} />
       ) : (
-        <ProducerDashboard currentUser={currentUser} />
+        <ProducerDashboard />
       );
     }
   };
