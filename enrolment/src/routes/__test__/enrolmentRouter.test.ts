@@ -5,6 +5,7 @@ import { signin, createUser } from "../../test/authHelper";
 import { UserType } from "@satoshi-test/common";
 import { Enrolment } from "../../models/enrolment";
 import { createProgram } from "../../test/createProgram";
+import { User } from "../../models/user";
 
 describe("POST /api/enrolment", () => {
   it("should return 401 if user is not signed in", async () => {
@@ -311,6 +312,62 @@ describe("GET /api/enrolment", () => {
     const response = await request(app)
       .get("/api/enrolment")
       .set("Cookie", producerCookie)
+      .send()
+      .expect(200);
+
+    expect(response.body.length).toEqual(1);
+    expect(response.body[0]).toMatchObject({
+      id: expect.any(String),
+      producer: expect.any(String),
+      originator: expect.objectContaining(
+        JSON.parse(JSON.stringify(originator))
+      ),
+      program: expect.objectContaining(JSON.parse(JSON.stringify(program))),
+    });
+  });
+});
+
+describe("GET /api/enrolment/:producerId", () => {
+  it("should return 401 if user is not authenticated", async () => {
+    const producer = await createUser("test@test.com", UserType.PRODUCER);
+
+    await request(app).get(`/api/enrolment/${producer.id}`).send().expect(401);
+  });
+
+  it("should return 401 if provided is is for an originator", async () => {
+    const originator = await createUser("test2@test.com", UserType.ORIGINATOR);
+    const cookie = await signin(originator.id, UserType.ORIGINATOR);
+
+    await request(app)
+      .get(`/api/enrolment/${originator.id}`)
+      .set("Cookie", cookie)
+      .send()
+      .expect(401);
+  });
+
+  it("should return 200 and array of enrolments", async () => {
+    const producer = await createUser("test@test.com", UserType.PRODUCER);
+    const originator = await createUser("test2@test.com", UserType.ORIGINATOR);
+    const program = await createProgram();
+    const apv = 23532432;
+
+    const cookie = await signin(originator.id, UserType.ORIGINATOR);
+
+    // create enrolment
+    await request(app)
+      .post("/api/enrolment")
+      .set("Cookie", cookie)
+      .send({
+        producer: producer.id,
+        originator: originator.id,
+        program: program.id,
+        apv,
+      })
+      .expect(201);
+
+    const response = await request(app)
+      .get(`/api/enrolment/${producer.id}`)
+      .set("Cookie", cookie)
       .send()
       .expect(200);
 

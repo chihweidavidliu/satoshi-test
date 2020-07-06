@@ -7,6 +7,7 @@ import {
   BadRequestError,
   requireOriginatorAuth,
   NotFoundError,
+  NotAuthorizedError,
 } from "@satoshi-test/common";
 import mongoose from "mongoose";
 import { body } from "express-validator";
@@ -121,9 +122,33 @@ enrolmentRouter.get(
     }
 
     const enrolments = await Enrolment.find({ producer: id })
-
       .populate({ path: "originator", model: User })
       .populate({ path: "program", model: Program });
+    return res.send(enrolments);
+  }
+);
+
+enrolmentRouter.get(
+  "/api/enrolment/:producerId",
+  currentUser,
+  requireOriginatorAuth,
+  async (req, res) => {
+    const { producerId } = req.params;
+
+    const user = await User.findById(producerId);
+
+    if (!user) {
+      throw new NotFoundError();
+    }
+
+    if (user.type === UserType.ORIGINATOR) {
+      throw new NotAuthorizedError();
+    }
+
+    const enrolments = await Enrolment.find({ producer: user.id })
+      .populate({ path: "originator", model: User })
+      .populate({ path: "program", model: Program });
+
     return res.send(enrolments);
   }
 );
