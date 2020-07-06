@@ -5,6 +5,10 @@ import { SmallHomeIcon } from "../icons/HomeIcon";
 import { SmallAddIcon } from "../icons/AddIcon";
 import { useRouter } from "next/router";
 
+const Spacer = styled.div`
+  height: ${(props) => props.theme.bottomBarHeight};
+`;
+
 const Wrapper = styled.div`
   height: ${(props) => props.theme.bottomBarHeight};
   width: 100vw;
@@ -38,13 +42,15 @@ const BottomBar = ({ openMenu }: IBottomBarProps) => {
   };
 
   return (
-    <Wrapper>
-      <ButtonGrid>
-        <SmallMenuIcon onClick={openMenu} />
-        <SmallHomeIcon onClick={handleHomeClick} />
-        <SmallAddIcon />
-      </ButtonGrid>
-    </Wrapper>
+    <Spacer>
+      <Wrapper>
+        <ButtonGrid>
+          <SmallMenuIcon onClick={openMenu} />
+          <SmallHomeIcon onClick={handleHomeClick} />
+          <SmallAddIcon />
+        </ButtonGrid>
+      </Wrapper>
+    </Spacer>
   );
 };
 

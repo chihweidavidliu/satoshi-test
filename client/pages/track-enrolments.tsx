@@ -1,7 +1,7 @@
 import React from "react";
-import { NextPageContext } from "next";
 import Layout from "../components/Layout/Layout";
 import { useAuthRequirement } from "../hooks/useAuthRequirement";
+import { NextPageContext } from "next";
 import buildClient from "../api/buildClient";
 import { IUser } from "../types/IUser";
 import { UserType } from "../types/UserType";
@@ -13,7 +13,7 @@ interface ITrackEnrolmentsPageProps {
 
 const TrackEnrolmentsPage = ({ currentUser }: ITrackEnrolmentsPageProps) => {
   const isAuthValid = useAuthRequirement(currentUser, UserType.ORIGINATOR);
-  return <Layout>{isAuthValid && <TrackEnrolment />}</Layout>;
+  return <Layout>{isAuthValid && <TrackEnrolment}</Layout>;
 };
 
 export default TrackEnrolmentsPage;

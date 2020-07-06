@@ -32,7 +32,11 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
     }
   };
   return (
-    <Layout>
+    <Layout
+      isContentCenteringDisabled={
+        (currentUser && currentUser.type === UserType.PRODUCER) || false
+      }
+    >
       <FadeIn>{renderDashboard()}</FadeIn>
     </Layout>
   );
