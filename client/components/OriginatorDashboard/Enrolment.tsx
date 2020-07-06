@@ -15,11 +15,18 @@ import { useRouter } from "next/router";
 import { ContentWrapper } from "../Layout/ContentWrapper";
 
 const StyledForm = styled(Form)`
-  display: grid;
   height: 100%;
-  grid-template-rows: max-content 1fr max-content;
+  max-height: 100%;
   grid-gap: 15px;
   padding: 20px 0px;
+  display: grid;
+  grid-template-rows: max-content 1fr max-content;
+`;
+
+const ProgramSelection = styled.div`
+  display: grid;
+  grid-template-rows: max-content 1fr;
+  overflow-y: hidden;
 `;
 
 const ProgramCardGrid = styled.div`
@@ -96,41 +103,45 @@ const Enrolment = ({ producer, currentUser }: IEnrolmentProps) => {
     <ContentWrapper>
       Select a program for {producer.email}
       <StyledForm onSubmit={handleSubmit}>
-        <div>APV</div>
-        <Form.Control
-          type="number"
-          placeholder="Enter APV"
-          name="apv"
-          value={values.apv}
-          onChange={handleChange}
-          onBlur={handleBlur}
-        />
+        <div>
+          <div>APV</div>
+          <Form.Control
+            type="number"
+            placeholder="Enter APV"
+            name="apv"
+            value={values.apv}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
 
-        {touched.apv && errors.apv && (
-          <Alert variant="danger">{errors.apv}</Alert>
-        )}
+          {touched.apv && errors.apv && (
+            <Alert variant="danger">{errors.apv}</Alert>
+          )}
+        </div>
 
-        <div>Select Program</div>
-        <ProgramCardGrid>
-          {programs.map((program) => {
-            return (
-              <ProgramCard
-                key={program.id}
-                program={program}
-                isSelected={values.program === program.id}
-                handleSelect={() => {
-                  if (values.program === program.id) {
-                    return setFieldValue("program", null);
-                  }
-                  setFieldValue("program", program.id);
-                }}
-              />
-            );
-          })}
-        </ProgramCardGrid>
-        {touched.program && errors.program && (
-          <Alert variant="danger">{errors.program}</Alert>
-        )}
+        <ProgramSelection>
+          <div>Select Program</div>
+          <ProgramCardGrid>
+            {programs.map((program) => {
+              return (
+                <ProgramCard
+                  key={program.id}
+                  program={program}
+                  isSelected={values.program === program.id}
+                  handleSelect={() => {
+                    if (values.program === program.id) {
+                      return setFieldValue("program", null);
+                    }
+                    setFieldValue("program", program.id);
+                  }}
+                />
+              );
+            })}
+          </ProgramCardGrid>
+          {touched.program && errors.program && (
+            <Alert variant="danger">{errors.program}</Alert>
+          )}
+        </ProgramSelection>
 
         <Button variant="primary" type="submit">
           Submit
