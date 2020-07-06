@@ -4,7 +4,7 @@ import { IEnrolment } from "../../utils/sortEnrolmentsByProducer";
 import CurrentProgramTitle from "./CurrentProgramTitle";
 import { formatPrice } from "../../utils/formatPrice";
 
-const OverviewWrapper = styled.div`
+const PricesWrapper = styled.div`
   height: 100%;
   overflow-y: auto;
   padding: 20px;
@@ -21,20 +21,24 @@ const PriceBox = styled.div`
   grid-gap: 10px;
 `;
 
-interface IOverviewProps {
+interface IPricesProps {
   enrolment: IEnrolment;
+  showPortfolio: () => void;
 }
 
-const Overview = ({ enrolment }: IOverviewProps) => {
+const Prices = ({ enrolment, showPortfolio }: IPricesProps) => {
   return (
-    <OverviewWrapper>
-      <CurrentProgramTitle enrolment={enrolment} />
+    <PricesWrapper>
+      <CurrentProgramTitle
+        enrolment={enrolment}
+        showPortfolio={showPortfolio}
+      />
       <PriceBox>
         <div>M+</div>
         <div>{formatPrice(enrolment.program.currentPrice)}</div>
       </PriceBox>
-    </OverviewWrapper>
+    </PricesWrapper>
   );
 };
 
-export default Overview;
+export default Prices;

@@ -14,13 +14,17 @@ const TitleWrapper = styled.div`
 
 interface ICurrentProgramTitleProps {
   enrolment: IEnrolment;
+  showPortfolio: () => void;
 }
 
-const CurrentProgramTitle = ({ enrolment }: ICurrentProgramTitleProps) => {
+const CurrentProgramTitle = ({
+  enrolment,
+  showPortfolio,
+}: ICurrentProgramTitleProps) => {
   return (
     <TitleWrapper>
       <div>{enrolment.program.name}</div>
-      <CircularArrowIcon />
+      <CircularArrowIcon onClick={showPortfolio} />
     </TitleWrapper>
   );
 };

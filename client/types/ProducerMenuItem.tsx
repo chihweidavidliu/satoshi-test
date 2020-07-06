@@ -1,5 +1,6 @@
 export enum ProducerMenuItem {
-  OVERVIEW = "OVERVIEW",
+  PRICE = "PRICE",
   CHARTS = "CHARTS",
   NEWS = "NEWS",
+  PROGRAM_SELECT = "PROGRAM_SELECT",
 }

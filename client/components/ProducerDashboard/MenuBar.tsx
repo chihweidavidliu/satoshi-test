@@ -23,7 +23,7 @@ const IconGrid = styled.div`
 `;
 
 const MENU_ORDER = [
-  ProducerMenuItem.OVERVIEW,
+  ProducerMenuItem.PRICE,
   ProducerMenuItem.CHARTS,
   ProducerMenuItem.NEWS,
 ];
@@ -53,8 +53,8 @@ const MenuBar = ({ selectedMenuItem, handleSelect }: IMenuBarProps) => {
       <IconGrid>
         <LeftChevron onClick={back} />
         <DollarIcon
-          isSelected={selectedMenuItem === ProducerMenuItem.OVERVIEW}
-          onClick={() => handleSelect(ProducerMenuItem.OVERVIEW)}
+          isSelected={selectedMenuItem === ProducerMenuItem.PRICE}
+          onClick={() => handleSelect(ProducerMenuItem.PRICE)}
         />
         <ChartIcon
           isSelected={selectedMenuItem === ProducerMenuItem.CHARTS}
