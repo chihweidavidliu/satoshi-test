@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { IUser } from "../../types/IUser";
 import { H1 } from "../typography/H1";
 import MenuBar from "./MenuBar";
+import { ProducerMenuItem } from "../../types/ProducerMenuItem";
+import Overview from "./Overview";
 
 const DashboardWrapper = styled.div`
   width: 100vw;
@@ -17,13 +19,19 @@ interface IProducerDashboardProps {
 }
 
 const ProducerDashboard = ({ currentUser }: IProducerDashboardProps) => {
+  const [selectedMenuItem, setSelectedMenuItem] = useState(
+    ProducerMenuItem.OVERVIEW
+  );
+
   return (
     <DashboardWrapper>
-      <MenuBar />
-      <H1>Producer Dashboard</H1>
-      <p>{`Welcome ${currentUser.name}`}</p>
-      <p>{currentUser.email}</p>
-      <p>{currentUser.type}</p>
+      <MenuBar
+        selectedMenuItem={selectedMenuItem}
+        handleSelect={(selected: ProducerMenuItem) =>
+          setSelectedMenuItem(selected)
+        }
+      />
+      {selectedMenuItem === ProducerMenuItem.OVERVIEW && <Overview />}
     </DashboardWrapper>
   );
 };

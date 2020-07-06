@@ -1,4 +1,6 @@
-export const ChartIcon = (props: React.SVGAttributes<SVGElement>) => (
+import { MenuItemSVG } from "../../types/MenuItemSVG";
+
+export const ChartIcon = ({ isSelected, ...props }: MenuItemSVG) => (
   <svg
     width="24"
     height="24"
@@ -13,8 +15,8 @@ export const ChartIcon = (props: React.SVGAttributes<SVGElement>) => (
         fillRule="evenodd"
         clipRule="evenodd"
         d="M19 3H5C3.9 3 3 3.9 3 5V19C3 20.1 3.9 21 5 21H19C20.1 21 21 20.1 21 19V5C21 3.9 20.1 3 19 3ZM19 19H5V5H19V19ZM9 10H7V17H9V10ZM11 7H13V17H11V7ZM17 13H15V17H17V13Z"
-        fill="black"
-        fillOpacity="0.54"
+        fill={isSelected ? "#101A3F" : "black"}
+        fillOpacity={isSelected ? "1" : "0.54"}
       />
     </g>
   </svg>

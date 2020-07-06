@@ -5,6 +5,7 @@ import { DollarIcon } from "../icons/DollarIcon";
 import { ChartIcon } from "../icons/ChartIcon";
 import { SMSIcon } from "../icons/SMSIcon";
 import { RightChevron } from "../icons/RightChevron";
+import { ProducerMenuItem } from "../../types/ProducerMenuItem";
 
 const MenuBarWrapper = styled.div`
   height: 74px;
@@ -21,14 +22,28 @@ const IconGrid = styled.div`
   justify-content: space-around;
 `;
 
-const MenuBar = () => {
+interface IMenuBarProps {
+  selectedMenuItem: ProducerMenuItem;
+  handleSelect: (selected: ProducerMenuItem) => void;
+}
+
+const MenuBar = ({ selectedMenuItem, handleSelect }: IMenuBarProps) => {
   return (
     <MenuBarWrapper>
       <IconGrid>
         <LeftChevron />
-        <DollarIcon />
-        <ChartIcon />
-        <SMSIcon />
+        <DollarIcon
+          isSelected={selectedMenuItem === ProducerMenuItem.OVERVIEW}
+          onClick={() => handleSelect(ProducerMenuItem.OVERVIEW)}
+        />
+        <ChartIcon
+          isSelected={selectedMenuItem === ProducerMenuItem.CHARTS}
+          onClick={() => handleSelect(ProducerMenuItem.CHARTS)}
+        />
+        <SMSIcon
+          isSelected={selectedMenuItem === ProducerMenuItem.NEWS}
+          onClick={() => handleSelect(ProducerMenuItem.NEWS)}
+        />
         <RightChevron />
       </IconGrid>
     </MenuBarWrapper>
