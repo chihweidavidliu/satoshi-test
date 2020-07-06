@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { useAuthContext } from "../../context/AuthContext";
+import Link from "next/link";
 
 interface IMenuWrapperProps {
   isVisible: boolean;
@@ -8,7 +9,7 @@ interface IMenuWrapperProps {
 
 const MenuItem = styled.li`
   color: white;
-  font-size: 48px;
+  font-size: 24px;
   list-style-type: none;
 `;
 
@@ -33,6 +34,9 @@ const Content = styled.div`
   max-width: 400px;
   width: 100%;
   padding: 20px;
+  display: grid;
+  grid-gap: 15px;
+  grid-auto-rows: max-content;
 `;
 
 interface IMenuProps {
@@ -46,6 +50,10 @@ const Menu = ({ isVisible, handleClose }: IMenuProps) => {
     <MenuWrapper isVisible={isVisible}>
       <Content>
         <button onClick={handleClose}>Close</button>
+        <Link href="/track-enrolments">
+          <MenuItem>Track Enrolments</MenuItem>
+        </Link>
+
         <MenuItem
           onClick={() => {
             signout();
