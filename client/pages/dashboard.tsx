@@ -1,11 +1,13 @@
 import { NextPage, NextPageContext } from "next";
-import { PageWrapper } from "../components/PageWrapper";
 import buildClient from "../api/buildClient";
 import { FadeIn } from "../components/FadeIn";
 import { useEffect } from "react";
 import { useRouter } from "next/router";
-import Dashboard from "../components/Dashboard";
+import OriginatorDashboard from "../components/OriginatorDashboard/OriginatorDashboard";
+import ProducerDashboard from "../components/ProducerDashboard/ProducerDashboard";
 import { IUser } from "../types/IUser";
+import { UserType } from "../types/UserType";
+import Layout from "../components/Layout/Layout";
 
 interface IDashboardPageProps {
   currentUser: IUser | null;
@@ -16,14 +18,27 @@ const DashboardPage: NextPage<IDashboardPageProps> = ({ currentUser }) => {
 
   useEffect(() => {
     if (!currentUser) {
-      router.push("/");
+      router.push("/signin");
     }
   }, []);
 
+  const renderDashboard = () => {
+    if (currentUser) {
+      return currentUser.type === UserType.ORIGINATOR ? (
+        <OriginatorDashboard currentUser={currentUser} />
+      ) : (
+        <ProducerDashboard />
+      );
+    }
+  };
   return (
-    <PageWrapper>
-      <FadeIn>{currentUser && <Dashboard currentUser={currentUser} />}</FadeIn>
-    </PageWrapper>
+    <Layout
+      isContentCenteringDisabled={
+        (currentUser && currentUser.type === UserType.PRODUCER) || false
+      }
+    >
+      <FadeIn>{renderDashboard()}</FadeIn>
+    </Layout>
   );
 };
 

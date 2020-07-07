@@ -10,32 +10,7 @@ import { useRequest } from "../hooks/useRequest";
 import { HTTP_METHOD } from "../types/httpMethod";
 import { useRouter } from "next/router";
 import { FadeIn } from "./FadeIn";
-
-const ContentGrid = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: max-content 1fr;
-  grid-gap: 20px;
-
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    width: 400px;
-  }
-`;
-
-const TitleWrapper = styled.div`
-  text-align: center;
-  padding: 30px;
-`;
-
-const H1 = styled.h1`
-  margin: 0;
-  color: white;
-  font-size: 24px;
-  @media (min-width: ${(props) => props.theme.tabletBreakpoint}) {
-    font-size: 48px;
-  }
-`;
+import { UserType } from "../types/UserType";
 
 const H2 = styled.h2`
   margin-bottom: 20px;
@@ -53,15 +28,20 @@ const A = styled.a`
 `;
 
 const validationSchema = Yup.object({
+  email: Yup.string()
+    .email("Valid email is required")
+    .required("Email is required"),
   username: Yup.string().required("Name is required"),
   password: Yup.string()
     .required("Password is required")
     .min(5, "Password should be at least 5 characters long"),
-  age: Yup.number().min(0, "Age must be over 0").required("Age is required"),
-  score: Yup.number().min(0, "Min score is 0").required("Score is required"),
 });
 
-const SigninSignup = () => {
+interface ISignupProps {
+  userType?: UserType;
+  isSigninLinkDisabled?: boolean;
+}
+const Signup = ({ userType, isSigninLinkDisabled }: ISignupProps) => {
   const router = useRouter();
 
   const onSubmit = async () => {
@@ -78,10 +58,9 @@ const SigninSignup = () => {
   } = useFormik({
     validationSchema,
     initialValues: {
+      email: "",
       username: "",
       password: "",
-      age: "",
-      score: "",
     },
     onSubmit,
   });
@@ -94,88 +73,69 @@ const SigninSignup = () => {
     body: {
       name: values.username,
       password: values.password,
-      age: values.age,
-      score: values.score,
+      email: values.email,
+      type: userType || UserType.ORIGINATOR,
     },
     onSuccess: () => router.push("/dashboard"),
   });
 
   return (
     <FadeIn>
-      <ContentGrid>
-        <TitleWrapper>
-          <H1>Join Us</H1>
-        </TitleWrapper>
-        <Card>
-          <H2>Sign Up</H2>
-          <Form onSubmit={handleSubmit}>
-            <Form.Group controlId="formBasicEmail">
-              <Form.Label>Name</Form.Label>
-              <Form.Control
-                placeholder="Enter name"
-                name="username"
-                value={values.username}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Group>
-            {touched.username && errors.username && (
-              <Alert variant="danger">{errors.username}</Alert>
-            )}
+      <Card>
+        <H2>Sign Up ({userType || "Originator"})</H2>
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Control
+              placeholder="Email"
+              name="email"
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Form.Group>
+          {touched.email && errors.email && (
+            <Alert variant="danger">{errors.email}</Alert>
+          )}
 
-            <Form.Group controlId="formBasicPassword">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                placeholder="Password"
-                name="password"
-                value={values.password}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Group>
-            {touched.password && errors.password && (
-              <Alert variant="danger">{errors.password}</Alert>
-            )}
-            <Form.Group controlId="age">
-              <Form.Label>Age</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Age"
-                name="age"
-                value={values.age}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Group>
-            {touched.age && errors.age && (
-              <Alert variant="danger">{errors.age}</Alert>
-            )}
-            <Form.Group controlId="score">
-              <Form.Label>Score</Form.Label>
-              <Form.Control
-                type="number"
-                placeholder="Score"
-                name="score"
-                value={values.score}
-                onChange={handleChange}
-                onBlur={handleBlur}
-              />
-            </Form.Group>
-            {touched.score && errors.score && (
-              <Alert variant="danger">{errors.score}</Alert>
-            )}
+          <Form.Group controlId="formBasicName">
+            <Form.Control
+              placeholder="Name"
+              name="username"
+              value={values.username}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Form.Group>
+          {touched.username && errors.username && (
+            <Alert variant="danger">{errors.username}</Alert>
+          )}
 
-            <div className="text-center">
-              <Button
-                variant="primary"
-                type="submit"
-                style={{ marginBottom: "10px" }}
-              >
-                Submit
-              </Button>
-            </div>
-            {apiErrors}
+          <Form.Group controlId="formBasicPassword">
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              name="password"
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            />
+          </Form.Group>
+          {touched.password && errors.password && (
+            <Alert variant="danger">{errors.password}</Alert>
+          )}
+
+          <div className="text-center">
+            <Button
+              variant="primary"
+              type="submit"
+              style={{ marginBottom: "10px" }}
+            >
+              Submit
+            </Button>
+          </div>
+          {apiErrors}
+
+          {!isSigninLinkDisabled && (
             <P>
               Already have an account? Click{" "}
               <A
@@ -188,11 +148,11 @@ const SigninSignup = () => {
               </A>{" "}
               to sign in
             </P>
-          </Form>
-        </Card>
-      </ContentGrid>
+          )}
+        </Form>
+      </Card>
     </FadeIn>
   );
 };
 
-export default SigninSignup;
+export default Signup;

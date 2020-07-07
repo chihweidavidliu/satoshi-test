@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: satoshi-enrolment-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: satoshi-enrolment
+  template:
+    metadata:
+      labels:
+        app: satoshi-enrolment
+    spec:
+      containers:
+        - name: satoshi-enrolment
+          image: chihweidavidliu/satoshi-enrolment
+          env:
+            - name: MONGO_URI
+              value: "mongodb://satoshi-auth-mongo-srv:27017/auth" # this will be visible in the public repo but it's not an issue as this is only accessible from within our cluster
+            - name: JWT_KEY # the name we will use to reference this variable within auth
+              value: "fwag4ighw4gn4jgnkjgnkj4g4"
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: jwt-secret # the name of the secret we created
+              #     key: JWT_KEY # the key within the secret whose value we will assign to this env variable
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: satoshi-enrolment-srv
+spec:
+  selector:
+    app: satoshi-enrolment
+  type: ClusterIP
+  ports:
+    - name: satoshi-enrolment
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

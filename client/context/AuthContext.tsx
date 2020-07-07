@@ -31,7 +31,7 @@ const AuthProvider: FunctionComponent<IAuthProviderProps> = ({
     url: "/api/users/signout",
     method: HTTP_METHOD.POST,
     body: {},
-    onSuccess: () => router.push("/"),
+    onSuccess: () => router.push("/signin"),
   });
 
   const signout = async () => {

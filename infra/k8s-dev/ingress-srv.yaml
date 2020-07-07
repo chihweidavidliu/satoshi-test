@@ -13,6 +13,14 @@ spec:
             backend:
               serviceName: satoshi-auth-srv
               servicePort: 3000
+          - path: /api/enrolment/?(.*)
+            backend:
+              serviceName: satoshi-enrolment-srv
+              servicePort: 3000
+          - path: /api/programs/?(.*)
+            backend:
+              serviceName: satoshi-programs-srv
+              servicePort: 3000
           - path: /?(.*)
             backend:
               serviceName: satoshi-client-srv

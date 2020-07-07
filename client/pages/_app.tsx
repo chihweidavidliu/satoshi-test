@@ -4,7 +4,6 @@ import { createGlobalStyle, ThemeProvider } from "styled-components";
 import NProgress from "nprogress";
 import Router from "next/router";
 import "bootstrap/dist/css/bootstrap.min.css";
-import Nav from "../components/Nav";
 import buildClient from "../api/buildClient";
 import { AuthProvider } from "../context/AuthContext";
 
@@ -33,6 +32,9 @@ export const theme: ITheme = {
   largeMobileBreakpoint: "376px",
   tabletBreakpoint: "767px",
   smallDesktopBreakpoint: "1024px",
+  fontFamily: "Roboto",
+  bottomBarHeight: "70px",
+  navHeight: "92px",
 };
 
 const GlobalStyle = createGlobalStyle<IThemeWrapper>`
@@ -55,7 +57,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <AuthProvider currentUser={pageProps.currentUser}>
-        <Nav />
         <Component {...pageProps} />
       </AuthProvider>
     </ThemeProvider>

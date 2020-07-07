@@ -1,7 +1,9 @@
+import { UserType } from "./UserType";
+
 export interface IUser {
   id: string;
   name: string;
-  score: number;
-  age: number;
-  iat: number;
+  email: string;
+  type: UserType;
+  originator?: string;
 }

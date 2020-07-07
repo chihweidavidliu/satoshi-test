@@ -10,7 +10,23 @@ build:
     push: false
   artifacts:
     - image: chihweidavidliu/satoshi-auth
-      context: server
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: chihweidavidliu/satoshi-enrolment
+      context: enrolment
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: chihweidavidliu/satoshi-programs
+      context: programs
       docker:
         dockerfile: Dockerfile
       sync:
