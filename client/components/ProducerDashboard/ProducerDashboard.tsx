@@ -6,6 +6,7 @@ import Prices from "./Prices";
 import { getEnrolments } from "../OriginatorDashboard/api/getEnrolments";
 import { IEnrolment } from "../../utils/sortEnrolmentsByProducer";
 import PortfolioOverview from "./PortfolioOverview";
+import Charts from "./Charts";
 
 const DashboardWrapper = styled.div`
   width: 100vw;
@@ -66,6 +67,13 @@ const ProducerDashboard = () => {
 
         {selectedMenuItem === ProducerMenuItem.PRICE && selectedEnrolment && (
           <Prices
+            enrolment={selectedEnrolment}
+            showPortfolio={() => setIsPortfolioOverviewVisible(true)}
+          />
+        )}
+
+        {selectedMenuItem === ProducerMenuItem.CHARTS && selectedEnrolment && (
+          <Charts
             enrolment={selectedEnrolment}
             showPortfolio={() => setIsPortfolioOverviewVisible(true)}
           />
