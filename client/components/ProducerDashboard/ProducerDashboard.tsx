@@ -29,7 +29,6 @@ const ProducerDashboard = () => {
   useEffect(() => {
     getEnrolments()
       .then((response) => {
-        console.log(response.data);
         setEnrolments(response.data);
 
         if (response.data.length) {
@@ -39,36 +38,43 @@ const ProducerDashboard = () => {
       .catch((error) => alert(error));
   }, []);
 
-  return (
-    <DashboardWrapper>
-      {isPortfolioOverviewVisible ? (
+  const renderContent = () => {
+    if (enrolments.length === 0) {
+      return <p>You have not enrolled in a program</p>;
+    }
+
+    if (isPortfolioOverviewVisible) {
+      return (
         <PortfolioOverview
-          selectedEnrolment={selectedEnrolment}
           enrolments={enrolments}
           handleEnrolmentSelect={(selected) => {
             setSelectedEnrolment(selected);
             setIsPortfolioOverviewVisible(false);
           }}
         />
-      ) : (
-        <>
-          <MenuBar
-            selectedMenuItem={selectedMenuItem}
-            handleSelect={(selected: ProducerMenuItem) =>
-              setSelectedMenuItem(selected)
-            }
-          />
+      );
+    }
 
-          {selectedMenuItem === ProducerMenuItem.PRICE && selectedEnrolment && (
-            <Prices
-              enrolment={selectedEnrolment}
-              showPortfolio={() => setIsPortfolioOverviewVisible(true)}
-            />
-          )}
-        </>
-      )}
-    </DashboardWrapper>
-  );
+    return (
+      <>
+        <MenuBar
+          selectedMenuItem={selectedMenuItem}
+          handleSelect={(selected: ProducerMenuItem) =>
+            setSelectedMenuItem(selected)
+          }
+        />
+
+        {selectedMenuItem === ProducerMenuItem.PRICE && selectedEnrolment && (
+          <Prices
+            enrolment={selectedEnrolment}
+            showPortfolio={() => setIsPortfolioOverviewVisible(true)}
+          />
+        )}
+      </>
+    );
+  };
+
+  return <DashboardWrapper>{renderContent()}</DashboardWrapper>;
 };
 
 export default ProducerDashboard;

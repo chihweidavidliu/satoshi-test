@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { IEnrolment } from "../../utils/sortEnrolmentsByProducer";
-import CurrentProgramTitle from "./CurrentProgramTitle";
+import { H1 } from "../typography/H1";
 
 const Wrapper = styled.div`
   max-width: 600px;
@@ -28,41 +28,32 @@ const BlueCard = styled.div`
 interface IPortfolioOverviewProps {
   enrolments: IEnrolment[];
   handleEnrolmentSelect: (selected: IEnrolment) => void;
-  selectedEnrolment: IEnrolment | null;
 }
 
 const PortfolioOverview = ({
   enrolments,
   handleEnrolmentSelect,
-  selectedEnrolment,
 }: IPortfolioOverviewProps) => {
   return (
     <Wrapper>
-      {enrolments.length && selectedEnrolment ? (
-        <>
-          <TitleWrapper>
-            <CurrentProgramTitle
-              enrolment={selectedEnrolment}
-              showPortfolio={() => {}}
-            />
-          </TitleWrapper>
+      <>
+        <TitleWrapper>
+          <H1>Select Program</H1>
+        </TitleWrapper>
 
-          <CardGrid>
-            {enrolments.map((enrolment: IEnrolment) => {
-              return (
-                <BlueCard
-                  key={enrolment.id}
-                  onClick={() => handleEnrolmentSelect(enrolment)}
-                >
-                  {enrolment.program.name}
-                </BlueCard>
-              );
-            })}
-          </CardGrid>
-        </>
-      ) : (
-        <div>You have not enrolled in any programs yet</div>
-      )}
+        <CardGrid>
+          {enrolments.map((enrolment: IEnrolment) => {
+            return (
+              <BlueCard
+                key={enrolment.id}
+                onClick={() => handleEnrolmentSelect(enrolment)}
+              >
+                {enrolment.program.name}
+              </BlueCard>
+            );
+          })}
+        </CardGrid>
+      </>
     </Wrapper>
   );
 };
