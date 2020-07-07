@@ -5,4 +5,5 @@ export const ContentWrapper = styled.div`
   max-width: 600px;
   padding: 15px;
   height: 100%;
+  flex-grow: 1;
 `;
