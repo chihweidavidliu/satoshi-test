@@ -37,6 +37,7 @@ const ProgramCardGrid = styled.div`
   overflow-y: auto;
   padding-bottom: 15px;
   grid-template-columns: 1fr 1fr;
+  grid-auto-rows: max-content;
 `;
 
 const validationSchema = Yup.object({

@@ -8,6 +8,8 @@ import Menu from "./Menu";
 const AppWrapper = styled.div`
   height: 100vh;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
 `;
 
 interface ILayoutProps {

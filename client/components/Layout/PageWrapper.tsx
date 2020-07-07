@@ -4,12 +4,9 @@ interface IPageWrapperProps {
   isBottomBarDisabled?: boolean;
   isCenteringDisabled?: boolean;
 }
+
 export const PageWrapper = styled.div<IPageWrapperProps>`
-  height: ${(props) => {
-    return `calc(100vh - ${props.theme.navHeight} - ${
-      props.isBottomBarDisabled ? 0 : props.theme.bottomBarHeight
-    })`;
-  }};
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
   width: 100vw;

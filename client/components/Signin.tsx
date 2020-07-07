@@ -33,11 +33,7 @@ const validationSchema = Yup.object({
     .min(5, "Password should be at least 5 characters long"),
 });
 
-interface ISigninSignupProps {
-  isSignupForm?: boolean;
-}
-
-const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
+const Signin = () => {
   const router = useRouter();
 
   const onSubmit = async () => {
@@ -60,10 +56,8 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
     onSubmit,
   });
 
-  const endpoint = isSignupForm ? "/api/users/signup" : "/api/users/signin";
-
   const { doRequest, apiErrors } = useRequest({
-    url: endpoint,
+    url: "/api/users/signin",
     method: HTTP_METHOD.POST,
     body: {
       email: values.email,
@@ -114,17 +108,16 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
           </div>
           {apiErrors}
           <P>
-            {isSignupForm ? "Already" : "Don't"} have an account? Click{" "}
+            Don't have an account? Click{" "}
             <A
               className="text-primary"
               onClick={() => {
-                const endpoint = isSignupForm ? "/signin" : "/signup";
-                router.push(endpoint);
+                router.push("/signup");
               }}
             >
               here
             </A>{" "}
-            to sign {isSignupForm ? "in" : "up"}
+            to sign up
           </P>
         </Form>
       </Card>
@@ -132,4 +125,4 @@ const SigninSignup = ({ isSignupForm }: ISigninSignupProps) => {
   );
 };
 
-export default SigninSignup;
+export default Signin;

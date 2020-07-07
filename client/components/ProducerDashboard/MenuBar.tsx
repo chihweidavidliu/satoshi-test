@@ -20,6 +20,7 @@ const IconGrid = styled.div`
   width: 100%;
   display: flex;
   justify-content: space-around;
+  max-width: 600px;
 `;
 
 const MENU_ORDER = [

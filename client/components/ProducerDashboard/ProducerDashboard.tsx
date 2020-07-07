@@ -9,9 +9,7 @@ import PortfolioOverview from "./PortfolioOverview";
 
 const DashboardWrapper = styled.div`
   width: 100vw;
-  height: ${(props) => {
-    return `calc(100vh - ${props.theme.navHeight} - ${props.theme.bottomBarHeight})`;
-  }};
+  height: 100%;
   text-align: center;
 `;
 
