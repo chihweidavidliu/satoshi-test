@@ -48,18 +48,16 @@ const PortfolioOverview = ({
           </TitleWrapper>
 
           <CardGrid>
-            {enrolments
-              .filter((enrolment) => enrolment.id !== selectedEnrolment.id)
-              .map((enrolment: IEnrolment) => {
-                return (
-                  <BlueCard
-                    key={enrolment.id}
-                    onClick={() => handleEnrolmentSelect(enrolment)}
-                  >
-                    {enrolment.program.name}
-                  </BlueCard>
-                );
-              })}
+            {enrolments.map((enrolment: IEnrolment) => {
+              return (
+                <BlueCard
+                  key={enrolment.id}
+                  onClick={() => handleEnrolmentSelect(enrolment)}
+                >
+                  {enrolment.program.name}
+                </BlueCard>
+              );
+            })}
           </CardGrid>
         </>
       ) : (
