@@ -22,7 +22,7 @@
     "@types/styled-components": "^5.1.0",
     "@types/yup": "^0.29.3",
     "awesome-debounce-promise": "^2.1.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "bootstrap": "^4.5.0",
     "dinero.js": "^1.8.1",
     "formik": "^2.1.4",
